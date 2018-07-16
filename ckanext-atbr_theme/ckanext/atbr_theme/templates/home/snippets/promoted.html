@@ -1,0 +1,14 @@
+{% ckan_extends %}
+
+{% block home_image_caption %}{{ _("The structure of the apo-form of glutaminyl
+cyclase from Ixodes scapularis at the end of a 400-nanosecond molecular dynamics
+simulation") }}{% endblock %}
+
+{% block home_image_content %}
+        <a class="media-image" href="#">
+          <img class="img-responsive" src="{{ h.url_for_static('/images/promoted_protein.jpg') }}" alt="Placeholder" width="420" /> </a>
+      {# <img class="img-responsive" src="{{
+  h.url_for_static('/images/promoted_protein.jpg') }}" alt="Placeholder"
+  width="420" /> </a> #}
+{% endblock %}
+
