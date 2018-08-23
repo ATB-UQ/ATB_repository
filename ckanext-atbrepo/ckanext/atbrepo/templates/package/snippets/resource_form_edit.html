@@ -1,0 +1,7 @@
+{% ckan_extends %}
+
+{% block basic_fields_url %}
+{{ super() }}
+
+  {{ form.input('run', label=_('Run'), id='field-run', placeholder=_('run'), value=data.run, error=errors.run, classes=['control-medium']) }}
+{% endblock %}
