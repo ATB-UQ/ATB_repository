@@ -1,5 +1,5 @@
 """Tests for plugin.py."""
-import ckanext.atbr_theme.plugin as plugin
+import ckanext.atbrepo.plugin as plugin
 
 def test_plugin():
     pass

@@ -10,22 +10,22 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='''ckanext-atbr_theme''',
+    name='''ckanext-atbrepo''',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
     version='0.0.1',
 
-    description='''Theme for the ATB Repository''',
+    description='''"An extension implementing the ATB Trajectory Repository"''',
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/tom--lee/ckanext-atbr_theme',
+    url='https://github.com//ckanext-atbrepo',
 
     # Author details
     author='''Thomas Lee''',
-    author_email='''contact@tomlee.com.au''',
+    author_email='''thomas.lee@uq.edu.au''',
 
     # Choose your license
     license='AGPL',
@@ -80,7 +80,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points='''
         [ckan.plugins]
-        atbr_theme=ckanext.atbr_theme.plugin:Atbr_ThemePlugin
+        atbrepo=ckanext.atbrepo.plugin:AtbrepoPlugin
 
         [babel.extractors]
         ckan = ckan.lib.extract:extract_ckan

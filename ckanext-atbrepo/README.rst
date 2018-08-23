@@ -2,34 +2,34 @@
    these badges work. The necessary Travis and Coverage config files have been
    generated for you.
 
-.. image:: https://travis-ci.org/tom--lee/ckanext-atbr_theme.svg?branch=master
-    :target: https://travis-ci.org/tom--lee/ckanext-atbr_theme
+.. image:: https://travis-ci.org//ckanext-atbrepo.svg?branch=master
+    :target: https://travis-ci.org//ckanext-atbrepo
 
-.. image:: https://coveralls.io/repos/tom--lee/ckanext-atbr_theme/badge.svg
-  :target: https://coveralls.io/r/tom--lee/ckanext-atbr_theme
+.. image:: https://coveralls.io/repos//ckanext-atbrepo/badge.svg
+  :target: https://coveralls.io/r//ckanext-atbrepo
 
-.. image:: https://pypip.in/download/ckanext-atbr_theme/badge.svg
-    :target: https://pypi.python.org/pypi//ckanext-atbr_theme/
+.. image:: https://pypip.in/download/ckanext-atbrepo/badge.svg
+    :target: https://pypi.python.org/pypi//ckanext-atbrepo/
     :alt: Downloads
 
-.. image:: https://pypip.in/version/ckanext-atbr_theme/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-atbr_theme/
+.. image:: https://pypip.in/version/ckanext-atbrepo/badge.svg
+    :target: https://pypi.python.org/pypi/ckanext-atbrepo/
     :alt: Latest Version
 
-.. image:: https://pypip.in/py_versions/ckanext-atbr_theme/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-atbr_theme/
+.. image:: https://pypip.in/py_versions/ckanext-atbrepo/badge.svg
+    :target: https://pypi.python.org/pypi/ckanext-atbrepo/
     :alt: Supported Python versions
 
-.. image:: https://pypip.in/status/ckanext-atbr_theme/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-atbr_theme/
+.. image:: https://pypip.in/status/ckanext-atbrepo/badge.svg
+    :target: https://pypi.python.org/pypi/ckanext-atbrepo/
     :alt: Development Status
 
-.. image:: https://pypip.in/license/ckanext-atbr_theme/badge.svg
-    :target: https://pypi.python.org/pypi/ckanext-atbr_theme/
+.. image:: https://pypip.in/license/ckanext-atbrepo/badge.svg
+    :target: https://pypi.python.org/pypi/ckanext-atbrepo/
     :alt: License
 
 =============
-ckanext-atbr_theme
+ckanext-atbrepo
 =============
 
 .. Put a description of your extension here:
@@ -53,17 +53,17 @@ Installation
    For example installing any non-Python dependencies or adding any required
    config settings.
 
-To install ckanext-atbr_theme:
+To install ckanext-atbrepo:
 
 1. Activate your CKAN virtual environment, for example::
 
      . /usr/lib/ckan/default/bin/activate
 
-2. Install the ckanext-atbr_theme Python package into your virtual environment::
+2. Install the ckanext-atbrepo Python package into your virtual environment::
 
-     pip install ckanext-atbr_theme
+     pip install ckanext-atbrepo
 
-3. Add ``atbr_theme`` to the ``ckan.plugins`` setting in your CKAN
+3. Add ``atbrepo`` to the ``ckan.plugins`` setting in your CKAN
    config file (by default the config file is located at
    ``/etc/ckan/default/production.ini``).
 
@@ -80,18 +80,18 @@ Document any optional config settings here. For example::
 
     # The minimum number of hours to wait before re-checking a resource
     # (optional, default: 24).
-    ckanext.atbr_theme.some_setting = some_default_value
+    ckanext.atbrepo.some_setting = some_default_value
 
 
 ------------------------
 Development Installation
 ------------------------
 
-To install ckanext-atbr_theme for development, activate your CKAN virtualenv and
+To install ckanext-atbrepo for development, activate your CKAN virtualenv and
 do::
 
-    git clone https://github.com/tom--lee/ckanext-atbr_theme.git
-    cd ckanext-atbr_theme
+    git clone https://github.com//ckanext-atbrepo.git
+    cd ckanext-atbrepo
     python setup.py develop
     pip install -r dev-requirements.txt
 
@@ -107,15 +107,15 @@ To run the tests, do::
 To run the tests and produce a coverage report, first make sure you have
 coverage installed in your virtualenv (``pip install coverage``) then run::
 
-    nosetests --nologcapture --with-pylons=test.ini --with-coverage --cover-package=ckanext.atbr_theme --cover-inclusive --cover-erase --cover-tests
+    nosetests --nologcapture --with-pylons=test.ini --with-coverage --cover-package=ckanext.atbrepo --cover-inclusive --cover-erase --cover-tests
 
 
 ---------------------------------
-Registering ckanext-atbr_theme on PyPI
+Registering ckanext-atbrepo on PyPI
 ---------------------------------
 
-ckanext-atbr_theme should be availabe on PyPI as
-https://pypi.python.org/pypi/ckanext-atbr_theme. If that link doesn't work, then
+ckanext-atbrepo should be availabe on PyPI as
+https://pypi.python.org/pypi/ckanext-atbrepo. If that link doesn't work, then
 you can register the project on PyPI for the first time by following these
 steps:
 
@@ -140,10 +140,10 @@ steps:
 
 
 ----------------------------------------
-Releasing a New Version of ckanext-atbr_theme
+Releasing a New Version of ckanext-atbrepo
 ----------------------------------------
 
-ckanext-atbr_theme is availabe on PyPI as https://pypi.python.org/pypi/ckanext-atbr_theme.
+ckanext-atbrepo is availabe on PyPI as https://pypi.python.org/pypi/ckanext-atbrepo.
 To publish a new version to PyPI follow these steps:
 
 1. Update the version number in the ``setup.py`` file.
