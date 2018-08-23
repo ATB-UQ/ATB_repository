@@ -1,0 +1,13 @@
+{% ckan_extends %}
+
+{% block package_description %}
+  {{ super() }}
+
+  {# Add our custom program field to the dataset read page. #}
+  {% if pkg.get('program') %}
+    <section id="dataset-program" class="resources module-content">
+    <p><strong>Program</strong>: {{ pkg.program[0] }}</p>
+    </section>
+  {% endif %}
+
+{% endblock %}
