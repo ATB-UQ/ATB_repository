@@ -3,7 +3,7 @@
 import yaml
 import secrets
 from ckanapi import RemoteCKAN, NotAuthorized
-from os import path, listdir, symlink, makedirs
+from os import path, listdir, symlink, makedirs, readlink
 
 with open("config.yml", "r") as c:
     config = yaml.load(c)
@@ -116,27 +116,38 @@ def update_resources(
         new_data["run"] = run
         if not resource in existing_resource_names:
             old_data = {"name" : resource}
-            public_resource = check_for_link(
+        else:
+            old_data = [
+                res for res in existing_resources if res["name"] == resource
+            ][0]
+        public_resource = check_for_link(
+            resource,
+            resource_dir,
+            trajectory_data_path,
+            public_data_path,
+        )
+        if public_resource == None:
+            public_resource = link_public_resource(
                 resource,
                 resource_dir,
                 trajectory_data_path,
                 public_data_path,
             )
-            if public_resource == None:
-                public_resource = link_public_resource(
-                    resource,
-                    resource_dir,
-                    trajectory_data_path,
-                    public_data_path,
+        url = path.join(
+            "http://", public_hostname, "public_data", public_resource
+        )
+        if "url" in old_data and not old_data["url"] == "":
+            if not url == old_data["url"]:
+                raise Exception(
+                    "URL in database ({}) does not match repo directory ({})".format(
+                        old_data["url"],
+                        url,
+                    )
                 )
-            new_data["url"] = path.join(
-                "http://", public_hostname, "public_data", public_resource
-            )
         else:
-            old_data = [
-                res for res in resources if res[name] == resource
-            ][0]
-        #printdict(old_data) ##DEBUG
+            new_data["url"] = url
+
+
         resources_data.append({**old_data, **new_data})
     return resources_data
 
@@ -168,6 +179,24 @@ def check_for_link(
     public_data_path,
 ):
     abs_resource_path = path.join(trajectory_data_path, resource_dir, resource)
+
+    abs_public_resource_dir = path.join(
+        public_data_path,
+        resource_dir,
+    )
+    for obfusicate in listdir(abs_public_resource_dir):
+        link = path.join(abs_public_resource_dir, obfusicate, resource)
+        if path.exists(link):
+            target = readlink(link)
+            if target == abs_resource_path:
+                return path.join(resource_dir, obfusicate, resource)
+            else:
+                raise Exception(
+                    "link exists but points to wrong path. Link: {} Target: {}".format(
+                        link,
+                        target,
+                    )
+                )
     return None
 
 
