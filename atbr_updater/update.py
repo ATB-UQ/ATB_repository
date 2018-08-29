@@ -57,47 +57,33 @@ def update_dataset(
     organization,
     public_hostname,
 ):
+    config, tags = dataset_config(dataset, dataset_path, trajectory_data_path)
+    package_data = api.action.package_show( id = dataset.lower() )
+    updated_data = { **package_data, **config }
+
     dataset_dir = path.join(trajectory_data_path, dataset_path)
     public_dataset_dir = path.join(trajectory_data_path, dataset)
-    subdirs = listdir(dataset_dir)
+    subdirs = [ d for d in listdir(dataset_dir) if not d=="metadata.yml" ]
+    resources = []
     for s,subdir in enumerate(subdirs):
-        existing_resources = [
-            res["name"] for res in api.action.package_show(
-                id = dataset.lower(),
-            )["resources"]
-        ]
-        update_resources(
+        resources += update_resources(
             dataset,
-            existing_resources,
+            package_data["resources"],
             path.join(dataset_path, subdir),
             trajectory_data_path,
             public_data_path,
             public_hostname,
+            organization,
         )
-            #position_func = lambda run: 1 + s + (run-1) * len(subdir)
-
-    resource_metadata = api.action.package_show(
-        id = dataset.lower(),
-    )["resources"]
-    resource_metadata.sort(
+    resources.sort(
         key = lambda x: (
             x["run"]*len(subdir) + subdirs.index(x["resource_type"])
         )
     )
-    resource_order = [
-        res["id"] for res in resource_metadata
-    ]
-    api.action.package_resource_reorder(
-        id = dataset.lower(),
-        order = resource_order,
-    )
-#   api.call_action(
-#       "package_resource_reorder",
-#       dict(
-#           id = dataset, 
-#           order = resource_order,
-#       )
-#   )
+    updated_data["resources"] = resources
+    printdict(updated_data) ##DEBUG
+    api.action.package_update(**updated_data)
+    return updated_data
 
 def update_resources(
     dataset,
@@ -106,78 +92,53 @@ def update_resources(
     trajectory_data_path,
     public_data_path,
     public_hostname,
+    organization,
 ):
     abs_resources_dir = path.join(trajectory_data_path, resource_dir)
     resources  = listdir(abs_resources_dir)
+    existing_resource_names = [ res["name"] for res in existing_resources ]
+    resources_data = []
     for resource in resources:
-        if not resource in existing_resources:
-            public_resource = link_public_resource(
+        abs_resource_path = path.join(abs_resources_dir, resource)
+        new_data = dict(
+            package_id = dataset.lower(),
+            size = path.getsize(abs_resource_path),
+            private = True,
+            owner_org = organization,
+            resource_type = path.basename(resource_dir),
+        )
+        name, sep, ext = resource.partition(".")
+        run_str = name.rpartition('_')[-1]
+        if run_str.isdigit():
+            run = int(run_str)
+        else:
+            run = 1
+        new_data["run"] = run
+        if not resource in existing_resource_names:
+            old_data = {"name" : resource}
+            public_resource = check_for_link(
                 resource,
                 resource_dir,
                 trajectory_data_path,
                 public_data_path,
             )
-            name, sep, ext = resource.partition(".")
-            run_str = name.rpartition('_')[-1]
-
-            if run_str.isdigit():
-                run = int(run_str)
-            else:
-                run = 1
-                
-            create_resource(
-                resource,
-                public_resource,
-                path.join(abs_resources_dir, resource),
-                dataset,
-                public_hostname,
-                resource_type = path.basename(resource_dir),
-                #file_format = ext,
-                run = run,
+            if public_resource == None:
+                public_resource = link_public_resource(
+                    resource,
+                    resource_dir,
+                    trajectory_data_path,
+                    public_data_path,
+                )
+            new_data["url"] = path.join(
+                "http://", public_hostname, "public_data", public_resource
             )
-
         else:
-            check_resource(
-                dataset,
-                resource,
-                resource_dir, 
-                trajectory_data_path,
-                public_data_path,
-            )
-
-    return resources
-
-def create_resource(
-    resource,
-    public_resource,
-    abs_path,
-    dataset,
-    public_hostname,
-    resource_type,
-    #file_format,
-    run = 1,
-):
-
-    api.action.resource_create(
-        name = resource,
-        package_id = dataset.lower(),
-        url = path.join("http://", public_hostname, "public_data", public_resource),
-        size = path.getsize(abs_path),
-        run = run,
-        private = True,
-        owner_org = organization,
-        resource_type = resource_type,
-    )
-
-def check_resource(
-    dataset,
-    resource,
-    resources_path, 
-    trajectory_data_path,
-    public_data_path,
-):
-    return None
-
+            old_data = [
+                res for res in resources if res[name] == resource
+            ][0]
+        #printdict(old_data) ##DEBUG
+        resources_data.append({**old_data, **new_data})
+    return resources_data
 
 def link_public_resource(
     resource,
@@ -200,19 +161,19 @@ def link_public_resource(
     symlink(abs_resource_path, abs_public_resource_path)
     return rel_public_resource_path
 
+def check_for_link(
+    resource,
+    resource_dir,
+    trajectory_data_path,
+    public_data_path,
+):
+    abs_resource_path = path.join(trajectory_data_path, resource_dir, resource)
+    return None
+
+
 def create_dataset(dataset, dataset_path, organization):
-    if not None == dataset_config(dataset_path, trajectory_data_path):
-        with open(path.join(trajectory_data_path, "repo.yml"), "r") as c:
-            config = yaml.load(c)
-    else:
-        config = dict(
-            notes = "",
-            title = dataset,
-        )
     api.action.package_create(
         name = dataset.lower(),
-        title = config["title"],
-        notes = config["notes"],
         private = True,
         owner_org = organization,
     )
@@ -235,12 +196,26 @@ def find_datasets(
             )
     return found
 
+def dataset_config(dataset, dataset_path, trajectory_data_path):
+    config_path = path.join(trajectory_data_path, dataset_path, "metadata.yml")
+    if not path.exists(config_path):
+        raw_config = {}
+    else:
+        with open(config_path, "r") as c:
+            raw_config = yaml.load(c)
+    USE_KEYS = ("title", "notes", "author", "author_email")
+    config = {
+        key:raw_config[key] \
+            for key in raw_config if key in USE_KEYS
+    }
+    tags = []
 
-
-
-def dataset_config(dataset, trajectory_data_path):
-    # placeholder
-    return None
+    if not "title" in config:
+        config["title"] = dataset
+    return config, tags
+    
+def printdict(d):
+    print( yaml.dump(d, default_flow_style=False )  )
 
 update_repository(
     api,
