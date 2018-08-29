@@ -1,0 +1,7 @@
+
+API_key: "ee204058-084f-41bf-9325-7e469cbe0eb0"
+host: localhost
+organization: "mduq"
+trajectory_data_path: /home/atb/atb_repo/trajectory_data
+public_data_path: /home/atb/atb_repo/public_data
+public_hostname: scmb-ckan.its.hpc.net.uq.edu.au
