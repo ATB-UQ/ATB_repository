@@ -1,9 +1,14 @@
 #!/usr/bin/env python3.6
 
+import sys
+import argparse
 import yaml
 import secrets
 from ckanapi import RemoteCKAN, NotAuthorized
 from os import path, listdir, symlink, makedirs, readlink
+
+
+
 
 with open("config.yml", "r") as c:
     config = yaml.load(c)
@@ -31,15 +36,9 @@ def update_repository(
 ):
     dataset_paths = find_datasets(trajectory_data_path)
     datasets = [ path.basename(p) for p in dataset_paths ]
-    existing_datasets = [
-        result["name"] \
-        for result in api.action.package_search(include_private=True)["results"]
-    ]
-    for dataset, dataset_path in zip(datasets, dataset_paths):
-        if not dataset.lower() in existing_datasets:
-            create_dataset(dataset, dataset_path, organization)
 
-    for dataset in datasets:
+    for dataset, dataset_path in zip(datasets, dataset_paths):
+        print("Processing "+dataset+"...")
         update_dataset(
             dataset,
             dataset_path,
@@ -58,7 +57,13 @@ def update_dataset(
     public_hostname,
 ):
     config, tags = dataset_config(dataset, dataset_path, trajectory_data_path)
-    package_data = api.action.package_show( id = dataset.lower() )
+    try:
+        package_data = api.action.package_show( id = dataset.lower() )
+    except:
+        print("Creating "+dataset+"...")
+        create_dataset(dataset, dataset_path, organization)
+        package_data = api.action.package_show( id = dataset.lower() )
+
     updated_data = { **package_data, **config }
 
     dataset_dir = path.join(trajectory_data_path, dataset_path)
@@ -81,10 +86,27 @@ def update_dataset(
         )
     )
     updated_data["resources"] = resources
-    printdict(updated_data) ##DEBUG
+    updated_data["private"] = False
+    if not "tags" in updated_data:
+        updated_data["tags"] = []
+    for tag in tags:
+        if not has_tag(tag, updated_data["tags"]):
+            updated_data["tags"].append(tag)
+    print(updated_data["tags"])
     api.action.package_update(**updated_data)
     return updated_data
 
+def has_tag(tag_data, existing_tags):
+    vid = "vocabulary_id"
+    for existing_tag in existing_tags:
+        if existing_tag["name"] == tag_data["name"]:
+            if vid in existing_tag and vid in tag_data:
+                if existing_tag[vid] == tag_data[vid]:
+                    return True
+            elif not (vid in existing_tag or vid in tag_data):
+                return True
+    return False
+        
 def update_resources(
     dataset,
     existing_resources,
@@ -103,7 +125,7 @@ def update_resources(
         new_data = dict(
             package_id = dataset.lower(),
             size = path.getsize(abs_resource_path),
-            private = True,
+            private = False,
             owner_org = organization,
             resource_type = path.basename(resource_dir),
         )
@@ -138,15 +160,13 @@ def update_resources(
         )
         if "url" in old_data and not old_data["url"] == "":
             if not url == old_data["url"]:
-                raise Exception(
+                print("WARNING: "+ \
                     "URL in database ({}) does not match repo directory ({})".format(
                         old_data["url"],
                         url,
                     )
                 )
-        else:
-            new_data["url"] = url
-
+        new_data["url"] = url
 
         resources_data.append({**old_data, **new_data})
     return resources_data
@@ -184,6 +204,9 @@ def check_for_link(
         public_data_path,
         resource_dir,
     )
+    if not path.exists(abs_public_resource_dir):
+        return None
+
     for obfusicate in listdir(abs_public_resource_dir):
         link = path.join(abs_public_resource_dir, obfusicate, resource)
         if path.exists(link):
@@ -232,12 +255,15 @@ def dataset_config(dataset, dataset_path, trajectory_data_path):
     else:
         with open(config_path, "r") as c:
             raw_config = yaml.load(c)
-    USE_KEYS = ("title", "notes", "author", "author_email")
+    USE_KEYS = ("title", "notes", "author", "author_email", "program")
     config = {
         key:raw_config[key] \
             for key in raw_config if key in USE_KEYS
     }
-    tags = []
+    tags = [ dict(name=tag) for tag in raw_config["tags"] ]
+   #special_tags = raw_config["special_tags"]
+   #for tag_type in special_tags:
+   #    tags.append( dict(name=special_tags[tag_type], vocabulary_id=tag_type) )
 
     if not "title" in config:
         config["title"] = dataset
@@ -246,11 +272,42 @@ def dataset_config(dataset, dataset_path, trajectory_data_path):
 def printdict(d):
     print( yaml.dump(d, default_flow_style=False )  )
 
-update_repository(
-    api,
-    trajectory_data_path,
-    public_data_path,
-    organization,
-    public_hostname,
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "-d", "--dir",
+    default="",
+    help="Specify a directory to update",
 )
 
+args = parser.parse_args()
+
+if args.dir == "":
+    update_repository(
+        api,
+        trajectory_data_path,
+        public_data_path,
+        organization,
+        public_hostname,
+    )
+else:
+    if not path.isdir(args.dir):
+        sys.stderr.write("Path is not a directory: " + args.dir + "\n")
+        exit(1)
+    if not args.dir.startswith(trajectory_data_path):
+        sys.stderr.write(
+              "Target directory path must start with root trajectory path "+ \
+              trajectory_data_path+"\n"
+        )
+        exit(1)
+    if not "metadata.yml" in listdir(args.dir):
+        sys.stderr.write("No metadata.yml file foud in "+args.dir+"\n")
+        exit(1)
+    update_dataset(
+        path.basename(args.dir),
+        path.relpath(args.dir, trajectory_data_path),
+        trajectory_data_path,
+        public_data_path,
+        organization,
+        public_hostname,
+    )
