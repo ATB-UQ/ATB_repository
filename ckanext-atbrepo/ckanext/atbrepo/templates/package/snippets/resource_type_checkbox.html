@@ -1,0 +1,8 @@
+
+{% for resource_type in h.atbrepo_get_resource_types(resources) %}
+
+<label for="{{ resource_type }}">{{ resource_type }}</label>
+<input id="{{ resource_type }}-filter" type="checkbox" name="{{ resource_type }}" value="" checked>
+<br>
+
+{% endfor %}

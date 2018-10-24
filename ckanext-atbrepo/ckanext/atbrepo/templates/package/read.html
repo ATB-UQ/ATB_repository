@@ -1,5 +1,17 @@
 {% ckan_extends %}
 
+{% block header %}
+  {{ super() }}
+
+  <style>
+    {% for resource_type in h.atbrepo_get_resource_types(pkg.resources) %}
+      #{{ resource_type }}-filter:checked ~ .resource-list [restype="{{ resource_type }}"] {
+        display: block;
+      } 
+    {% endfor %}
+  </style>
+{% endblock %}
+
 {% block package_description %}
   {{ super() }}
 

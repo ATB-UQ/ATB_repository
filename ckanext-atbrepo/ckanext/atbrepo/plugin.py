@@ -28,16 +28,24 @@ def programs():
     except toolkit.ObjectNotFound:
         return None
 
+def get_resource_types(resources):
+    """
+    jinja2 helper fuction to get the list of unique resource types
+    """
+    return set( resource["resource_type"] for resource in resources )
+
 
 class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IConfigurer, inherit=False)
     plugins.implements(plugins.IDatasetForm, inherit=False)
     plugins.implements(plugins.ITemplateHelpers, inherit=False)
+    plugins.implements(plugins.ITemplateHelpers)
+
 
     def update_config(self, config):
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_public_directory(config, 'public')
-       #toolkit.add_resource('fanstatic', 'atbrepo')
+        toolkit.add_resource('fanstatic', 'atbrepo')
 
     def get_helpers(self):
         return {'programs': programs}
@@ -98,4 +106,13 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
         })
 
         return schema
+
+    def get_helpers(self):
+        '''Register the template helper functions.
+        '''
+        # Template helper function names should begin with the name of the
+        # extension they belong to, to avoid clashing with functions from
+        # other extensions.
+        return {'atbrepo_get_resource_types': get_resource_types}
+
 
