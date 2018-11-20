@@ -39,16 +39,13 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IConfigurer, inherit=False)
     plugins.implements(plugins.IDatasetForm, inherit=False)
     plugins.implements(plugins.ITemplateHelpers, inherit=False)
-    plugins.implements(plugins.ITemplateHelpers)
+    #plugins.implements(plugins.ITemplateHelpers)
 
 
     def update_config(self, config):
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_public_directory(config, 'public')
         toolkit.add_resource('fanstatic', 'atbrepo')
-
-    def get_helpers(self):
-        return {'programs': programs}
 
     def is_fallback(self):
         # Return True to register this plugin as the default handler for
@@ -113,6 +110,9 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
         # Template helper function names should begin with the name of the
         # extension they belong to, to avoid clashing with functions from
         # other extensions.
-        return {'atbrepo_get_resource_types': get_resource_types}
+        return {
+	    'atbrepo_get_resource_types': get_resource_types,
+            'programs': programs,
+	}
 
 
