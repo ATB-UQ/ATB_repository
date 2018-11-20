@@ -1,0 +1,85 @@
+OXYTOCIN in water
+ &cntrl
+  ! Run MD (0) minimization (1) trajectory (2)
+  imin=0,
+  ! Read velocities as well as coordinates (5) or not (1)
+  ntx=1,
+  ! Restart the simulation with velocity info (1) or not (0)
+  irest=0,
+  ! Write binary files (2) or ASCII (1)
+  ntxo=2,
+  ! Write summary to mdout every ntpr steps
+  ntpr=10000,
+  ! Wrap molecules back into box (1) or not (0)
+  iwrap=1,
+  ! Output coordinates every ntwx steps
+  ntwx=1,
+  ! Output velocities every ntwv steps
+  ntwv=1,
+  ! Output forces every ntwf steps
+  ntwf=0,
+  ! Output energies every ntwf steps
+  ntwe=1
+  ! Output coordinates and velocities in ASCII (0) or binary (1)
+  ioutfm=1,
+  ! number of timesteps
+  nstlim=10
+  ! Remove center of mass motion every nscm steps
+  nscm=100,
+  ! number of timesteps
+  dt=0.002,
+  ! Timestep factor for multiple timesteps
+  nrespa=1,
+  ! Thermostat method. 1 for Berendsen
+  ntt=1,
+  ! Target temperature
+  temp0=298,
+  ! initial temperature (only matters for non-restarts)
+  tempi=298,
+  ! random number seed
+  ig=395720843,
+  ! Thermostat time constant in picoseconds
+  tautp=0.1,
+  ! Pressure setting.
+  ! NVT (0), isotropic NPT (1), anisotropic NPT (2), semiisotropic NPT (3)
+  ntp=1,
+  ! Barostat method. Berendsen (1) or Monte Carlo (2)
+  barostat=1,
+  ! Target pressure in bar
+  pres0=1.0,
+  ! compressibility in 1e-6 bar^-1
+  comp=46.0,
+  ! pressure relaxation time in ps
+  taup=1.0,
+  ! contrain length of bonds involving hydrogen
+  ntc=2,
+  ! SHAKE tolerance
+  tol=0.00001,
+  ! Use fast water algorithm (0) or not (4)
+  jfastw=0,
+  ! Name of water residues
+  WATNAM='SOL',
+  ! name of water oxygens
+  OWTNM='OW',
+  ! name of water hydrogen 1
+  HWTNM1='HW1',
+  ! name of water hydrogen 2
+  HWTNM2='HW2',
+  ! Selectively omit certain bonded interactions. 2 to omit bonds involving H
+  ntf=2,
+  ! no periodicity (0), constant volume (1) or constant pressure (2)
+  ntb=2,
+  ! Force cutoff for short range nonbonded forces in Angstroms
+  cut=14,
+ &end
+ &ewald
+  skinnb=2,
+  ! approach to use for switching function of coloumb forces
+  ! 1 for cubic spline. 6 for IPS (see manual)
+  ! other options not available in parallel simulations
+  eedmeth=1,
+  ! apply continuum correction to vdw forces (1) or not (0)
+  vdwmeth=0,
+  ! undocumented flag to turn off PME. Does not work on GPUS
+  use_pme=1,
+ &end
