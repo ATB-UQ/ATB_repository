@@ -30,7 +30,10 @@ class Amber_Data(Run_Data):
 
         self._tags = [('num_timestep','nstlim', int), ('timestep', 'dt', float), ('temperature', 'temp0', float),\
                       ('cutoff', 'cut', float), ('shake_tolerance', 'tol', float), ('barostat', 'barostat', int), \
-                      ('pressure', 'pres0', float)]
+                      ('pressure', 'pres0', float), ('thermostat', 'ntt', int)]
+
+        self._barostat = {1:'Berendsen', 2:'Monte Carlo'}
+        self._thermostat = {1:'Berendsen'}
 
         self._parameters = {}
 
@@ -45,7 +48,12 @@ class Amber_Data(Run_Data):
 
                 if key not in self._parameters:
                     try:
-                        self._parameters[key] = data_type(self.find_data(line, data_id))
+                        data = data_type(self.find_data(line, data_id))
+                        self._parameters[key] = data
+                        if key == 'barostat':
+                            self._parameters[key] = self._barostat.get(data)
+                        if key == 'thermostat':
+                            self._parameters[key] = self._thermostat.get(data)
                     except TypeError:
                         pass
 
@@ -54,7 +62,7 @@ class Amber_Data(Run_Data):
         :param
         line(str): The line to be processed. Must have all trailing characters stripped.
         :return
-        data(str/None) The 'tag''s data, or None, if tag not found."""
+        data(str/None) The tag's data, or None, if tag not found."""
 
         line_data = None
         line_tag = None
