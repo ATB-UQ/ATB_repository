@@ -24,7 +24,7 @@ def create_barostats():
     context = {'user': user['name']}
     try:
         data = {'id': 'barostats'}
-        toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the thermostat vocabulary to
+        toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the barostat vocabulary to
                                                              # see if it already exists.
         logging.info("barostats vocabulary already exists, skipping.")
     except toolkit.ObjectNotFound:
@@ -36,6 +36,33 @@ def create_barostats():
                     "Adding tag {0} to vocab 'barostats'".format(tag))
             data = {'name': tag, 'vocabulary_id': vocab['id']}
             toolkit.get_action('tag_create')(context, data)
+
+def create_thermostats():
+    user = toolkit.get_action('get_site_user')({'ignore_auth': True}, {})
+    context = {'user': user['name']}
+    try:
+        data = {'id': 'thermostats'}
+        toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the thermostat vocabulary to
+                                                             # see if it already exists.
+        logging.info("thermostats vocabulary already exists, skipping.")
+    except toolkit.ObjectNotFound:
+        logging.info("Creating vocab 'thermostats'")
+        data = {'name': 'thermostats'}
+        vocab = toolkit.get_action('vocabulary_create')(context, data)
+        for tag in (u'Berendsen', u'Monte Carlo'): #Add thermostat types here
+            logging.info(
+                    "Adding tag {0} to vocab 'thermostats'".format(tag))
+            data = {'name': tag, 'vocabulary_id': vocab['id']}
+            toolkit.get_action('tag_create')(context, data)
+
+def thermostats():
+    create_thermostats()
+    try:
+        tag_list = toolkit.get_action('tag_list')
+        thermostats = tag_list(data_dict={'vocabulary_id': 'thermostats'})
+        return thermostats
+    except toolkit.ObjectNotFound:
+        return None
 
 def barostats():
     create_barostats()
@@ -96,6 +123,11 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
             'barostat': [
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_to_tags')('barostats')
+            ],
+            # Add thermostat tags
+            'thermostat': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_to_tags')('thermostats')
             ]
         })
 
@@ -129,6 +161,9 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
                 toolkit.get_validator('ignore_missing')],
             'barostat': [
                 toolkit.get_converter('convert_from_tags')('barostats'),
+                toolkit.get_validator('ignore_missing')],
+            'thermostat': [
+                toolkit.get_converter('convert_from_tags')('thermostats'),
                 toolkit.get_validator('ignore_missing')]
         })
 
@@ -148,7 +183,8 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
         return {
 	    'atbrepo_get_resource_types': get_resource_types,
             'programs': programs,
-            'barostats': barostats
+            'barostats': barostats,
+            'thermostats': thermostats
 	}
 
 
