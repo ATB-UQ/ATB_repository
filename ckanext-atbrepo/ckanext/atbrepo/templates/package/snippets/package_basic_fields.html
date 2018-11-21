@@ -1,9 +1,9 @@
 {% ckan_extends %}
 
 {% block package_basic_fields_custom %}
-  {{ form.input('temperature', label=_('Temperature'), id='field-temperature', placeholder=_('temperature'),
+  {{ form.input('temperature', label=_('Temperature1'), id='field-temperature', placeholder=_('temperature'),
     value=data.temperature, error=errors.temperature, classes=['control-medium']) }}
 
-  {{ form.input('pressure', label=_('Pressure'), id='field-pressure', placeholder=_('pressure'),
+  {{ form.input('pressure', label=_('Pressure1'), id='field-pressure', placeholder=_('pressure'),
     value=data.pressure, error=errors.pressure, classes=['control-medium']) }}
 {% endblock %}
