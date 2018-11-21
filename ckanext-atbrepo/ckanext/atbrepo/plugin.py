@@ -19,6 +19,33 @@ def create_programs():
             data = {'name': tag, 'vocabulary_id': vocab['id']}
             toolkit.get_action('tag_create')(context, data)
 
+def create_barostats():
+    user = toolkit.get_action('get_site_user')({'ignore_auth': True}, {})
+    context = {'user': user['name']}
+    try:
+        data = {'id': 'barostats'}
+        toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the thermostat vocabulary to
+                                                             # see if it already exists.
+        logging.info("barostats vocabulary already exists, skipping.")
+    except toolkit.ObjectNotFound:
+        logging.info("Creating vocab 'barostats'")
+        data = {'name': 'barostats'}
+        vocab = toolkit.get_action('vocabulary_create')(context, data)
+        for tag in (u'Berendsen', u'Monte Carlo'): #Add barostat types here
+            logging.info(
+                    "Adding tag {0} to vocab 'barostats'".format(tag))
+            data = {'name': tag, 'vocabulary_id': vocab['id']}
+            toolkit.get_action('tag_create')(context, data)
+
+def barostats():
+    create_barostats()
+    try:
+        tag_list = toolkit.get_action('tag_list')
+        barostats = tag_list(data_dict={'vocabulary_id': 'barostats'})
+        return barostats
+    except toolkit.ObjectNotFound:
+        return None
+
 def programs():
     create_programs()
     try:
@@ -64,10 +91,15 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
             'program': [
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_to_tags')('programs')
+            ],
+            # Add barostat tags
+            'barostat': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_to_tags')('barostats')
             ]
         })
 
-        # Add run metadata field to the resource schema
+        # Add run metadata field to the resodataurce schema
         schema['resources'].update({
             'run' : [ toolkit.get_validator('is_positive_integer') ]
         })
@@ -94,6 +126,9 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
         schema.update({
             'program': [
                 toolkit.get_converter('convert_from_tags')('programs'),
+                toolkit.get_validator('ignore_missing')],
+            'barostat': [
+                toolkit.get_converter('convert_from_tags')('barostats'),
                 toolkit.get_validator('ignore_missing')]
         })
 
@@ -113,6 +148,7 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
         return {
 	    'atbrepo_get_resource_types': get_resource_types,
             'programs': programs,
+            'barostats': barostats
 	}
 
 
