@@ -1,0 +1,6 @@
+{% ckan_extends %}
+
+{% block package_basic_fields_custom %}
+  {{ form.input('temperature', label=_('Temperature'), id='field-temperature', placeholder=_('temperature'),
+    value=data.temperature, error=errors.temperature, classes=['control-medium']) }}
+{% endblock %}

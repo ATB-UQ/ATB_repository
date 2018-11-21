@@ -128,6 +128,11 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
             'thermostat': [
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_to_tags')('thermostats')
+            ],
+            #Add temperature field
+            'temperature': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_to_extras')
             ]
         })
 
@@ -164,7 +169,11 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
                 toolkit.get_validator('ignore_missing')],
             'thermostat': [
                 toolkit.get_converter('convert_from_tags')('thermostats'),
-                toolkit.get_validator('ignore_missing')]
+                toolkit.get_validator('ignore_missing')],
+            'temperature': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_from_extras')
+            ]
         })
 
         # Validates run metadata field for resources before showing to user
