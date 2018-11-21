@@ -6,6 +6,7 @@ import yaml
 import secrets
 from ckanapi import RemoteCKAN, NotAuthorized
 from os import path, listdir, symlink, makedirs, readlink
+from parse_control_files import *
 
 
 
@@ -56,7 +57,12 @@ def update_dataset(
     organization,
     public_hostname,
 ):
+    # dictionary of metadata, tags of dataset
     config, tags = dataset_config(dataset, dataset_path, trajectory_data_path)
+    program = config.get("program")
+    title = config.get("title")
+    parameters = dataset_control(dataset_path, trajectory_data_path, program)
+
     try:
         package_data = api.action.package_show( id = dataset.lower() )
     except:
@@ -64,7 +70,7 @@ def update_dataset(
         create_dataset(dataset, dataset_path, organization)
         package_data = api.action.package_show( id = dataset.lower() )
 
-    updated_data = { **package_data, **config }
+    updated_data = { **package_data, **parameters, **config }
 
     dataset_dir = path.join(trajectory_data_path, dataset_path)
     public_dataset_dir = path.join(trajectory_data_path, dataset)
@@ -87,6 +93,7 @@ def update_dataset(
     )
     updated_data["resources"] = resources
     updated_data["private"] = False
+    updated_data["parameters"] = parameters
     if not "tags" in updated_data:
         updated_data["tags"] = []
     for tag in tags:
@@ -256,11 +263,11 @@ def dataset_config(dataset, dataset_path, trajectory_data_path):
         with open(config_path, "r") as c:
             raw_config = yaml.load(c)
     USE_KEYS = ("title", "notes", "author", "author_email", "program")
-    config = {
+    config = { #dictionary of the metadata
         key:raw_config[key] \
             for key in raw_config if key in USE_KEYS
     }
-    tags = [ dict(name=tag) for tag in raw_config["tags"] ]
+    tags = [ dict(name=tag) for tag in raw_config["tags"] ] #creates a list of dictionaries of form {name=tag}
    #special_tags = raw_config["special_tags"]
    #for tag_type in special_tags:
    #    tags.append( dict(name=special_tags[tag_type], vocabulary_id=tag_type) )
@@ -268,7 +275,17 @@ def dataset_config(dataset, dataset_path, trajectory_data_path):
     if not "title" in config:
         config["title"] = dataset
     return config, tags
-    
+
+def dataset_control(dataset_path, trajectory_data_path, program):
+    control_dir = path.join(trajectory_data_path, dataset_path)
+    control_file = os.listdir(control_dir)[0]
+    parameters = {}
+    if program == 'AMBER':
+        data = Amber_Data(control_file)
+        parameters = data.get_parameters()
+    return parameters
+
+
 def printdict(d):
     print( yaml.dump(d, default_flow_style=False )  )
 

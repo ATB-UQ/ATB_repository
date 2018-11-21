@@ -1,14 +1,13 @@
 class Run_Data(object):
     """Parent class for runs. """
-    def __init__(self, file_path):
-        self._file_path = file_path
+    def __init__(self, file):
+        self._file = file
 
         self._file_list = []
-        with open(file_path) as file:
-            for line in file:
-                line = line.rstrip()
-                line = line.strip()
-                self._file_list.append(line)
+        for line in file:
+            line = line.rstrip()
+            line = line.strip()
+            self._file_list.append(line)
 
         if self._file_list[2] == '&cntrl':
             self._type = 'amber'
@@ -25,8 +24,8 @@ class Amber_Data(Run_Data):
     """A subclass of the Run_Data, to parse Amber files only.
     It should be created once the file type is known."""
 
-    def __init__(self, file_path):
-        super().__init__(file_path)
+    def __init__(self, file):
+        super().__init__(file)
 
         self._tags = [('num_timestep','nstlim', int), ('timestep', 'dt', float), ('temperature', 'temp0', float),\
                       ('cutoff', 'cut', float), ('shake_tolerance', 'tol', float), ('barostat', 'barostat', int), \
