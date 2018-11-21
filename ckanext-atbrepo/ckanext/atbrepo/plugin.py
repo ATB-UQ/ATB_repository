@@ -113,6 +113,12 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
 
     def _modify_package_schema(self, schema):
 
+        # Add temperature field
+        'temperature': [
+            toolkit.get_validator('ignore_missing'),
+            toolkit.get_converter('convert_to_extras')
+        ]
+
         # Add program tags
         schema.update({
             'program': [
@@ -129,11 +135,6 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_to_tags')('thermostats')
             ],
-            #Add temperature field
-            'temperature': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_extras')
-            ]
         })
 
         # Add run metadata field to the resodataurce schema
@@ -155,6 +156,10 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
 
     def show_package_schema(self):
         schema = super(AtbrepoPlugin, self).show_package_schema()
+        'temperature': [
+            toolkit.get_validator('ignore_missing'),
+            toolkit.get_converter('convert_from_extras')
+        ]
 
         # Don't show vocab tags mixed in with normal 'free' tags
         # (e.g. on dataset pages, or on the search page)
@@ -170,10 +175,6 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
             'thermostat': [
                 toolkit.get_converter('convert_from_tags')('thermostats'),
                 toolkit.get_validator('ignore_missing')],
-            'temperature': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_from_extras')
-            ]
         })
 
         # Validates run metadata field for resources before showing to user
