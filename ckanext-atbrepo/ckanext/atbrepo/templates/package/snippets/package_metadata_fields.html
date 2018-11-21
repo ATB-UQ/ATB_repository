@@ -20,7 +20,7 @@
     <label class="control-label" for="field-barostat">{{ _("Barostat") }}</label>
     <div class="controls">
       <select id="field-barostat" name="barostat" data-module="autocomplete">
-        {% for program in h.programs()  %}
+        {% for barostat in h.barostats()  %}
           <option value="{{ barostat }}" {% if barostat in data.get('barostat', []) %}selected="selected"{% endif %}>{{ barostat }}</option>
         {% endfor %}
       </select>
@@ -29,7 +29,7 @@
     <label class="control-label" for="field-thermostat">{{ _("Thermostat") }}</label>
     <div class="controls">
       <select id="field-thermostat" name="thermostat" data-module="autocomplete">
-        {% for program in h.programs()  %}
+        {% for thermostat in h.thermostats()  %}
           <option value="{{ thermostat }}" {% if thermostat in data.get('thermostat', []) %}selected="selected"{% endif %}>{{ thermostat }}</option>
         {% endfor %}
       </select>

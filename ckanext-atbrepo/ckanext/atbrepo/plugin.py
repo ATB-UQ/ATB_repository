@@ -31,7 +31,7 @@ def create_barostats():
         logging.info("Creating vocab 'barostats'")
         data = {'name': 'barostats'}
         vocab = toolkit.get_action('vocabulary_create')(context, data)
-        for tag in (u'Berendsen', u'Monte Carlo'): #Add barostat types here
+        for tag in (u'Berendsen', u'Monte Carlo', u'None'): #Add barostat types here
             logging.info(
                     "Adding tag {0} to vocab 'barostats'".format(tag))
             data = {'name': tag, 'vocabulary_id': vocab['id']}
@@ -193,7 +193,7 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
 	    'atbrepo_get_resource_types': get_resource_types,
             'programs': programs,
             'barostats': barostats,
-            'thermostats': thermostats
+            'thermostats': thermostats,
 	}
 
 
