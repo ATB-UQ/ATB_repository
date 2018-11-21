@@ -1,13 +1,14 @@
 class Run_Data(object):
     """Parent class for runs. """
-    def __init__(self, file):
-        self._file = file
+    def __init__(self, control_file):
+        self._file = control_file
 
         self._file_list = []
-        for line in file:
-            line = line.rstrip()
-            line = line.strip()
-            self._file_list.append(line)
+        with open(control_file) as file:
+            for line in file:
+                line = line.rstrip()
+                line= line.strip()
+                self._file_list.append(line)
 
         if self._file_list[2] == '&cntrl':
             self._type = 'amber'
@@ -35,7 +36,6 @@ class Amber_Data(Run_Data):
         self._thermostat = {1:'Berendsen'}
 
         self._parameters = {}
-
         self.find_parameters()
 
     def find_parameters(self):
@@ -49,10 +49,12 @@ class Amber_Data(Run_Data):
                     try:
                         data = data_type(self.find_data(line, data_id))
                         self._parameters[key] = data
-                        if key == 'barostat':
-                            self._parameters[key] = self._barostat.get(data)
-                        if key == 'thermostat':
-                            self._parameters[key] = self._thermostat.get(data)
+                        self._parameters['barostat'] = 'Monte Carlo'
+                        self._parameters['thermostat'] = 'Monte Carlo'
+                        # if key == 'barostat':
+                        #     self._parameters[key] = self._barostat.get(data)
+                        # if key == 'thermostat':
+                        #     self._parameters[key] = self._thermostat.get(data)
                     except TypeError:
                         pass
 

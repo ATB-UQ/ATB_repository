@@ -59,7 +59,7 @@ def update_dataset(
 ):
     # dictionary of metadata, tags of dataset
     config, tags = dataset_config(dataset, dataset_path, trajectory_data_path)
-    program = config.get("program")
+    program = config["program"]
     title = config.get("title")
     parameters = dataset_control(dataset_path, trajectory_data_path, program)
 
@@ -70,6 +70,7 @@ def update_dataset(
         create_dataset(dataset, dataset_path, organization)
         package_data = api.action.package_show( id = dataset.lower() )
 
+    printdict(parameters)
     updated_data = { **package_data, **parameters, **config }
 
     dataset_dir = path.join(trajectory_data_path, dataset_path)
@@ -93,13 +94,12 @@ def update_dataset(
     )
     updated_data["resources"] = resources
     updated_data["private"] = False
-    updated_data["parameters"] = parameters
+
     if not "tags" in updated_data:
         updated_data["tags"] = []
     for tag in tags:
         if not has_tag(tag, updated_data["tags"]):
             updated_data["tags"].append(tag)
-    print(updated_data["tags"])
     api.action.package_update(**updated_data)
     return updated_data
 
@@ -277,10 +277,10 @@ def dataset_config(dataset, dataset_path, trajectory_data_path):
     return config, tags
 
 def dataset_control(dataset_path, trajectory_data_path, program):
-    control_dir = path.join(trajectory_data_path, dataset_path)
-    control_file = listdir(control_dir)[0]
+    control_dir = path.join(trajectory_data_path, dataset_path, 'control')
+    control_file = path.join(trajectory_data_path, dataset_path, 'control', listdir(control_dir)[0])
     parameters = {}
-    if program == 'AMBER':
+    if 'AMBER' in program:
         data = Amber_Data(control_file)
         parameters = data.get_parameters()
     return parameters
