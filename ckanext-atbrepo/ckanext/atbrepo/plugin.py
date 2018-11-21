@@ -114,10 +114,12 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
     def _modify_package_schema(self, schema):
 
         # Add temperature field
+        schema.update({
         'temperature': [
             toolkit.get_validator('ignore_missing'),
             toolkit.get_converter('convert_to_extras')
         ]
+        })
 
         # Add program tags
         schema.update({
@@ -156,10 +158,11 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
 
     def show_package_schema(self):
         schema = super(AtbrepoPlugin, self).show_package_schema()
-        'temperature': [
-            toolkit.get_validator('ignore_missing'),
-            toolkit.get_converter('convert_from_extras')
-        ]
+        schema.update({
+            'temperature': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_from_extras')],
+        })
 
         # Don't show vocab tags mixed in with normal 'free' tags
         # (e.g. on dataset pages, or on the search page)
