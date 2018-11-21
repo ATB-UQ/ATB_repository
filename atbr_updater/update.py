@@ -278,7 +278,7 @@ def dataset_config(dataset, dataset_path, trajectory_data_path):
 
 def dataset_control(dataset_path, trajectory_data_path, program):
     control_dir = path.join(trajectory_data_path, dataset_path)
-    control_file = os.listdir(control_dir)[0]
+    control_file = listdir(control_dir)[0]
     parameters = {}
     if program == 'AMBER':
         data = Amber_Data(control_file)
