@@ -60,7 +60,7 @@ def update_dataset(
     # dictionary of metadata, tags of dataset
     config, tags = dataset_config(dataset, dataset_path, trajectory_data_path)
     program = config["program"]
-    title = config.get("title")
+    
     parameters = dataset_control(dataset_path, trajectory_data_path, program)
 
     try:
@@ -70,8 +70,9 @@ def update_dataset(
         create_dataset(dataset, dataset_path, organization)
         package_data = api.action.package_show( id = dataset.lower() )
 
-    printdict(parameters)
+    # printdict(parameters)
     updated_data = { **package_data, **parameters, **config }
+    printdict(updated_data)
 
     dataset_dir = path.join(trajectory_data_path, dataset_path)
     public_dataset_dir = path.join(trajectory_data_path, dataset)
