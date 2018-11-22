@@ -14,4 +14,10 @@
       <td class="dataset-details">{{ pkg_dict.pressure }}</td>
     </tr>
   {% endif %}
+  {% if pkg_dict.initial_temperature %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Initial Temperature") }}</th>
+      <td class="dataset-details">{{ pkg_dict.initial_temperature }}</td>
+    </tr>
+  {% endif %}
 {% endblock %}

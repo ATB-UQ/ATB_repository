@@ -123,6 +123,10 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
             toolkit.get_validator('ignore_missing'),
             toolkit.get_converter('convert_to_extras')
         ],
+        'initial_temperature': [
+            toolkit.get_validator('ignore_missing'),
+            toolkit.get_converter('convert_to_extras')
+        ],
         })
 
         # Add program tags
@@ -167,6 +171,9 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_from_extras')],
             'pressure': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_from_extras')],
+            'initial_temperature': [
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_from_extras')],
         })

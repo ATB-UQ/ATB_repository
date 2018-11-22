@@ -6,10 +6,7 @@ import yaml
 import secrets
 from ckanapi import RemoteCKAN, NotAuthorized
 from os import path, listdir, symlink, makedirs, readlink
-from parse_control_files import *
-
-
-
+import parsers
 
 with open("config.yml", "r") as c:
     config = yaml.load(c)
@@ -102,7 +99,9 @@ def update_dataset(
         if not has_tag(tag, updated_data["tags"]):
             updated_data["tags"].append(tag)
     api.action.package_update(**updated_data)
-    printdict(api.action.package_show( id = dataset.lower() ))
+
+    # printdict(api.action.package_show( id = dataset.lower() ))
+
     return updated_data
 
 def has_tag(tag_data, existing_tags):
@@ -115,7 +114,7 @@ def has_tag(tag_data, existing_tags):
             elif not (vid in existing_tag or vid in tag_data):
                 return True
     return False
-        
+
 def update_resources(
     dataset,
     existing_resources,
@@ -182,7 +181,7 @@ def update_resources(
 
 def link_public_resource(
     resource,
-    resource_dir, 
+    resource_dir,
     trajectory_data_path,
     public_data_path,
 ):
@@ -283,7 +282,10 @@ def dataset_control(dataset_path, trajectory_data_path, program):
     control_file = path.join(trajectory_data_path, dataset_path, 'control', listdir(control_dir)[0])
     parameters = {}
     if 'AMBER' in program:
-        data = Amber_Data(control_file)
+        data = parsers.AmberData(control_file)
+        parameters = data.get_parameters()
+    if 'GROMOS' in program:
+        data = parsers.GromosData(control_file)
         parameters = data.get_parameters()
     return parameters
 
