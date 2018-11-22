@@ -34,4 +34,10 @@
     </section>
   {% endif %}
 
+  {% if pkg.get('temperature') %}
+    <section id="dataset-temperature" class="resources module-content">
+    <p><strong>Temperature</strong>: {{ pkg.temperature[0] }}</p>
+    </section>
+  {% endif %}
+
 {% endblock %}

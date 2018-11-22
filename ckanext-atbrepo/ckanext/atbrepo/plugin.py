@@ -205,6 +205,7 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
             'programs': programs,
             'barostats': barostats,
             'thermostats': thermostats,
+            'temperature': temperature,
 	}
 
 
