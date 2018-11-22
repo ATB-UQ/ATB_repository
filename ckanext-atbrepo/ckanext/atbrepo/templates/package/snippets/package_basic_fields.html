@@ -4,7 +4,7 @@
 
 {% block package_basic_fields_custom %}
   {{ form.input('temperature', label=_('Temperature'), id='field-temperature', placeholder=_('temperature'),
-    value=pkg_dict.temperature, error=errors.temperature, classes=['control-medium']) }}
+    value=data.temperature, error=errors.temperature, classes=['control-medium']) }}
 
   {{ form.input('pressure', label=_('Pressure'), id='field-pressure', placeholder=_('pressure'),
     value=data.pressure, error=errors.pressure, classes=['control-medium']) }}
