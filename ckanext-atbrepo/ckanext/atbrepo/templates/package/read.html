@@ -34,4 +34,11 @@
     </section>
   {% endif %}
 
+  {% if pkg_dict.temperature %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Temperature") }}</th>
+      <td class="dataset-details">{{ pkg_dict.temperature }}</td>
+    </tr>
+  {% endif %}
+
 {% endblock %}
