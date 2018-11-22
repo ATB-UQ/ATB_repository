@@ -28,4 +28,10 @@
     </section>
   {% endif %}
 
+  {% if pkg.get('barostat') %}
+    <section id="dataset-barostat" class="resources module-content">
+    <p><strong>Barostat</strong>: {{ pkg.barostat[0] }}</p>
+    </section>
+  {% endif %}
+
 {% endblock %}
