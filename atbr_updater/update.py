@@ -293,7 +293,7 @@ def dataset_control(dataset_path, trajectory_data_path, program):
     runtime = parameters['runtime']
     simulation_time = len(listdir(control_dir)) * runtime
     parameters['simulation_time'] = simulation_time
-
+    printdict(parameters)
     return parameters
 
 
