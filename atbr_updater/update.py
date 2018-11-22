@@ -60,7 +60,7 @@ def update_dataset(
     # dictionary of metadata, tags of dataset
     config, tags = dataset_config(dataset, dataset_path, trajectory_data_path)
     program = config["program"]
-    
+
     parameters = dataset_control(dataset_path, trajectory_data_path, program)
 
     try:
@@ -72,7 +72,7 @@ def update_dataset(
 
     # printdict(parameters)
     updated_data = { **package_data, **parameters, **config }
-    printdict(updated_data)
+    # printdict(updated_data)
 
     dataset_dir = path.join(trajectory_data_path, dataset_path)
     public_dataset_dir = path.join(trajectory_data_path, dataset)
@@ -102,6 +102,7 @@ def update_dataset(
         if not has_tag(tag, updated_data["tags"]):
             updated_data["tags"].append(tag)
     api.action.package_update(**updated_data)
+    printdict(api.action.package_show( id = dataset.lower() ))
     return updated_data
 
 def has_tag(tag_data, existing_tags):
