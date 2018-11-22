@@ -1,7 +1,6 @@
 {% ckan_extends %}
 
 {% block extras scoped %}
-  {{ super() }}
   {% if pkg_dict.temperature %}
     <tr>
       <th scope="row" class="dataset-label">{{ _("Temperature") }}</th>
