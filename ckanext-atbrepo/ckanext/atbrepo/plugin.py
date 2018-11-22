@@ -117,19 +117,16 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
         schema.update({
         'temperature': [
             toolkit.get_validator('ignore_missing'),
-            toolkit.get_converter('convert_to_extras')
-        ],
+            toolkit.get_converter('convert_to_extras')],
         'pressure': [
             toolkit.get_validator('ignore_missing'),
-            toolkit.get_converter('convert_to_extras')
-        ],
+            toolkit.get_converter('convert_to_extras')],
         'initial_temperature': [
             toolkit.get_validator('ignore_missing'),
-            toolkit.get_converter('convert_to_extras')
-        ],
+            toolkit.get_converter('convert_to_extras')],
         'simulation_time': [
             toolkit.get_validator('ignore_missing'),
-            toolkit.get_converter('convert_to_extras')
+            toolkit.get_converter('convert_to_extras')],
         })
 
         # Add program tags
