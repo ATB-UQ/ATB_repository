@@ -12,6 +12,7 @@ class GromosData(Run_Data):
 
         self._parameters = {}
         self.find_parameters()
+        self.calc_runtime()
 
     def find_parameters(self):
         key_values = {**self.find_data(), **self.find_extras()}

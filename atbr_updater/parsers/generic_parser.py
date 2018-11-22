@@ -26,6 +26,10 @@ class Run_Data(object):
         """Must be implemented by the subclasses"""
         pass
 
+    def calc_runtime(self):
+        timestep = self._parameters['timestep'] * (10**-12) #convert timestep to picoseconds.
+        self._parameters['runtime'] = timestep * self._parameters['num_timestep']
+
     def get_parameters(self):
         return self._parameters
 

@@ -16,6 +16,7 @@ class AmberData(Run_Data):
 
         self._parameters = {}
         self.find_parameters()
+        self.calc_runtime()
 
     def find_parameters(self):
         for line in self._file_list:

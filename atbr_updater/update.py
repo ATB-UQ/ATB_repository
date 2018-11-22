@@ -279,14 +279,21 @@ def dataset_config(dataset, dataset_path, trajectory_data_path):
 
 def dataset_control(dataset_path, trajectory_data_path, program):
     control_dir = path.join(trajectory_data_path, dataset_path, 'control')
-    control_file = path.join(trajectory_data_path, dataset_path, 'control', listdir(control_dir)[0])
+    #gets control data from first file in control directory, assuming that all runs have same parameters.
+    control_file = path.join(control_dir, listdir(control_dir)[0])
     parameters = {}
     if 'AMBER' in program:
         data = parsers.AmberData(control_file)
         parameters = data.get_parameters()
+
     if 'GROMOS' in program:
         data = parsers.GromosData(control_file)
         parameters = data.get_parameters()
+
+    runtime = parameters['runtime']
+    simulation_time = len(listdir(control_dir)) * runtime
+    parameters['simulation time'] = simulation_time
+
     return parameters
 
 
