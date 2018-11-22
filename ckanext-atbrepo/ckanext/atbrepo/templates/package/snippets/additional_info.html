@@ -1,6 +1,6 @@
 {% ckan_extends %}
 
-{% block package_additional_info %}
+{% block extras scoped %}
   {{ super() }}
   {% if pkg_dict.temperature %}
     <tr>
