@@ -297,6 +297,10 @@ def dataset_control(dataset_path, trajectory_data_path, program):
         data = parsers.GromosData(control_file)
         parameters = data.get_parameters()
 
+    if 'GROMACS' in program:
+        data = parsers.GromacsData(control_file)
+        parameters = data.get_parameters()
+
     runtime = parameters['runtime']
     simulation_time = len(listdir(control_dir)) * runtime
     parameters['simulation_time'] = simulation_time
