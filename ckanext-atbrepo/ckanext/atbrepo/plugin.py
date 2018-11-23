@@ -27,7 +27,7 @@ def create_barostats():
         data = {'id': 'barostats'}
         toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the thermostat vocabulary to
                                                              # see if it already exists.
-        data_vocab_old = {'vocabulary_id': data[id]}
+        data_vocab_old = {'vocabulary_id': 'barostats'}
         old_tags = toolkit.get_action('tag_list')(context, data_vocab_old)
         for tag in vocab_tags:
             if tag not in old_tags:
