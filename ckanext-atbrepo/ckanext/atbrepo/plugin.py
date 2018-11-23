@@ -27,14 +27,14 @@ def create_barostats():
         data = {'id': 'barostats'}
         toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the thermostat vocabulary to
                                                              # see if it already exists.
-        # data_vocab_old = {'vocabulary_id': data[id]}
-        # old_tags = ckan.logic.action.get.tag_list(context, data_vocab_old)
-        # for tag in vocab_tags:
-        #     if tag not in old_tags:
-        #         logging.info(
-        #             "Adding tag {0} to vocab 'barostats'".format(tag))
-        #         data = {'name': tag, 'vocabulary_id': vocab['id']}
-        #         toolkit.get_action('tag_create')(context, data)
+        data_vocab_old = {'vocabulary_id': data[id]}
+        old_tags = toolkit.get_action('tag_list')(context, data_vocab_old)
+        for tag in vocab_tags:
+            if tag not in old_tags:
+                logging.info(
+                    "Adding tag {0} to vocab 'barostats'".format(tag))
+                data = {'name': tag, 'vocabulary_id': vocab['id']}
+                toolkit.get_action('tag_create')(context, data)
 
         logging.info("barostats vocabulary already exists, skipping.")
 
