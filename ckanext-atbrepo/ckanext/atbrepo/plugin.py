@@ -32,7 +32,10 @@ def create_barostats():
                 logging.info(
                     "Adding tag {0} to vocab 'barostats'".format(tag))
                 data = {'name': tag, 'vocabulary_id': vocab_old['id']}
-                toolkit.get_action('tag_create')(context, data)
+                try:
+                    toolkit.get_action('tag_create')(context, data)
+                except toolkit.ValidationError:
+                    pass
 
         logging.info("barostats vocabulary already exists, skipping.")
 
