@@ -59,6 +59,13 @@ def update_dataset(
     program = config["program"]
 
     parameters = dataset_control(dataset_path, trajectory_data_path, program)
+    parameter_tags = ['barostat', 'thermostat', 'program']
+    for tag in parameter_tags:
+        try:
+            value = parameters[tag]
+            tags.append(dict(name=value))
+        except KeyError:
+            continue
 
     try:
         package_data = api.action.package_show( id = dataset.lower() )

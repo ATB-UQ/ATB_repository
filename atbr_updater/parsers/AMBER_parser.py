@@ -14,7 +14,7 @@ class AmberData(Run_Data):
         self._barostat = {1:'Berendsen', 2:'Monte Carlo'}
         self._thermostat = {1:'Berendsen'}
 
-        self._parameters = {}
+        self._parameters = {'program': 'AMBER'}
         self.find_parameters()
         self.calc_runtime()
 

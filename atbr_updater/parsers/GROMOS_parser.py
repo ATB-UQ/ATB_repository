@@ -14,7 +14,7 @@ class GromosData(Run_Data):
         self._barostat = {0: 'None', 1: 'Pressure Constraining', 2: 'Berendsen', 3: 'Nose-Hover'}
         self._thermostat = {1: 'Berendsen'}
 
-        self._parameters = {}
+        self._parameters = {'program': 'GROMOS'}
         self.find_parameters()
         self.calc_runtime()
 
