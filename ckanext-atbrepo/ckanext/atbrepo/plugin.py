@@ -25,12 +25,10 @@ def create_barostats():
     vocab_tags = (u'Berendsen', u'Monte Carlo', u'None', u'Pressure Constraining', u'Nose-Hover', u'Isotropic') #Add barostat types here
     try:
         data = {'id': 'barostats'}
-        toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the thermostat vocabulary to
+        vocab_old = toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the thermostat vocabulary to
                                                              # see if it already exists.
-        data_vocab_old = {'vocabulary_id': 'barostats'}
-        old_tags = toolkit.get_action('tag_list')(context, data_vocab_old)
         for tag in vocab_tags:
-            if tag not in old_tags:
+            if tag not in vocab_old.values():
                 logging.info(
                     "Adding tag {0} to vocab 'barostats'".format(tag))
                 data = {'name': tag, 'vocabulary_id': vocab['id']}
