@@ -27,7 +27,7 @@ class Run_Data(object):
         pass
 
     def calc_runtime(self):
-        timestep = self._parameters['timestep'] * (10**-12) #convert timestep to picoseconds.
+        timestep = self._parameters['timestep']
         self._parameters['runtime'] = timestep * self._parameters['num_timestep']
 
     def get_parameters(self):
