@@ -31,7 +31,7 @@ def create_barostats():
             if tag not in vocab_old.values():
                 logging.info(
                     "Adding tag {0} to vocab 'barostats'".format(tag))
-                data = {'name': tag, 'vocabulary_id': vocab['id']}
+                data = {'name': tag, 'vocabulary_id': vocab_old['id']}
                 toolkit.get_action('tag_create')(context, data)
 
         logging.info("barostats vocabulary already exists, skipping.")
