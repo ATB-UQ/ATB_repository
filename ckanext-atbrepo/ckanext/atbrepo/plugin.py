@@ -55,16 +55,17 @@ def create_thermostats():
     vocab_tags = (u'Berendsen', u'Monte Carlo') #Add thermostat types here
     try:
         data = {'id': 'thermostats'}
-        toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the thermostat vocabulary to
+        vocab_old = toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the thermostat vocabulary to
                                                              # see if it already exists.
-        # data_vocab_old = {'vocabulary_id': data[id]}
-        # old_tags = ckan.logic.action.get.tag_list(context, data_vocab_old)
-        # for tag in vocab_tags:
-        #     if tag not in old_tags:
-        #         logging.info(
-        #             "Adding tag {0} to vocab 'thermostats'".format(tag))
-        #         data = {'name': tag, 'vocabulary_id': vocab['id']}
-        #         toolkit.get_action('tag_create')(context, data)
+        for tag in vocab_tags:
+            if tag not in vocab_old.values():
+                logging.info(
+                    "Adding tag {0} to vocab 'barostats'".format(tag))
+                data = {'name': tag, 'vocabulary_id': vocab_old['id']}
+                try:
+                    toolkit.get_action('tag_create')(context, data)
+                except toolkit.ValidationError:
+                    pass
 
         logging.info("thermostats vocabulary already exists, skipping.")
     except toolkit.ObjectNotFound:
