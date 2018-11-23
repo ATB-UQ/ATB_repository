@@ -14,4 +14,7 @@
 
   {{ form.input('simulation_time', label=_('Simulation Time'), id='field-simulation_time', placeholder=_('simulation_time'),
   value=data.simulation_time, error=errors.simulation_time, classes=['control-medium']) }}
+
+  {{ form.input('runtime', label=_('Runtime'), id='field-runtime', placeholder=_('runtime'),
+  value=data.runtime, error=errors.runtime, classes=['control-medium']) }}
 {% endblock %}

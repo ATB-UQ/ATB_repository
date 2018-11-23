@@ -6,7 +6,7 @@ class AmberData(Run_Data):
 
     def __init__(self, file):
         super().__init__(file)
-
+                        # key, id in file, data type, number to multiply by to standardise
         self._tags = [('num_timestep','nstlim', int), ('timestep', 'dt', float), ('temperature', 'temp0', float),\
                       ('cutoff', 'cut', float), ('shake_tolerance', 'tol', float), ('barostat', 'barostat', int), \
                       ('pressure', 'pres0', float), ('thermostat', 'ntt', int)]
@@ -29,12 +29,10 @@ class AmberData(Run_Data):
                     try:
                         data = data_type(self.find_data(line, data_id))
                         self._parameters[key] = data
-                        self._parameters['barostat'] = 'Monte Carlo'
-                        self._parameters['thermostat'] = 'Monte Carlo'
-                        # if key == 'barostat':
-                        #     self._parameters[key] = self._barostat.get(data)
-                        # if key == 'thermostat':
-                        #     self._parameters[key] = self._thermostat.get(data)
+                        if key == 'barostat':
+                            self._parameters[key] = self._barostat.get(data)
+                        if key == 'thermostat':
+                            self._parameters[key] = self._thermostat.get(data)
                     except TypeError:
                         pass
 

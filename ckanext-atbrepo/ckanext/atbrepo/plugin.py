@@ -31,7 +31,7 @@ def create_barostats():
         logging.info("Creating vocab 'barostats'")
         data = {'name': 'barostats'}
         vocab = toolkit.get_action('vocabulary_create')(context, data)
-        for tag in (u'Berendsen', u'Monte Carlo', u'None'): #Add barostat types here
+        for tag in (u'Berendsen', u'Monte Carlo', u'None', u'Pressure Constraining', u'Nose-Hover'): #Add barostat types here
             logging.info(
                     "Adding tag {0} to vocab 'barostats'".format(tag))
             data = {'name': tag, 'vocabulary_id': vocab['id']}
@@ -127,6 +127,9 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
         'simulation_time': [
             toolkit.get_validator('ignore_missing'),
             toolkit.get_converter('convert_to_extras')],
+        'runtime': [
+            toolkit.get_validator('ignore_missing'),
+            toolkit.get_converter('convert_to_extras')],
         })
 
         # Add program tags
@@ -177,6 +180,9 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_from_extras')],
             'simulation_time': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_from_extras')],
+            'runtime': [
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_from_extras')],
         })

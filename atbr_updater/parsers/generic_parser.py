@@ -45,3 +45,18 @@ class Run_Data(object):
 
         tag = (name, tag_id, type)
         self._tags.append(tag)
+
+    def standard_units(self):
+        """Converts the units in self._parameters to standardised units.
+        Pressure --> Bar
+        Temperature --> Kelvin
+        """
+        for tag in self._tags:
+            key = tag[0]
+            value = self._parameters[key]
+            try:
+                standard = tag[3]
+                value = value * standard
+                self._parameters[key] = value
+            except IndexError:
+                continue

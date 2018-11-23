@@ -20,6 +20,12 @@
       <td class="dataset-details">{{ pkg_dict.initial_temperature }}</td>
     </tr>
   {% endif %}
+  {% if pkg_dict.runtime %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Runtime") }}</th>
+      <td class="dataset-details">{{ pkg_dict.runtime }}</td>
+    </tr>
+  {% endif %}
   {% if pkg_dict.simulation_time %}
     <tr>
       <th scope="row" class="dataset-label">{{ _("Simulation Time") }}</th>

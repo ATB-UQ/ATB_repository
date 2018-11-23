@@ -6,9 +6,13 @@ class GromosData(Run_Data):
 
     def __init__(self, file):
         super().__init__(file)
+                        # key, id in file, data type, number to multiply by to standardise
         self._tags = [('num_timestep','NSTLIM', int), ('timestep', 'DT', float), ('initial_temperature', 'TEMPI', float),\
-                      ('pressure', 'PRES0', float), ('bath_temperature', 'TEMP0', float), ('barostat', 'NTP', int)
+                      ('pressure', 'PRES0', float, 16.6057), ('bath_temperature', 'TEMP0', float), ('barostat', 'NTP', int)
                       ]
+
+        self._barostat = {0: 'None', 1: 'Pressure Constraining', 2: 'Berendsen', 3: 'Nose-Hover'}
+        self._thermostat = {1: 'Berendsen'}
 
         self._parameters = {}
         self.find_parameters()
@@ -23,6 +27,8 @@ class GromosData(Run_Data):
             if key not in self._parameters:
                 try:
                     self._parameters[key] = data_type(key_values[data_id])
+                    if key == 'barostat':
+                        self._parameters[key] = self._barostat.get(data)
                 except (TypeError, KeyError) as error:
                     pass
 
