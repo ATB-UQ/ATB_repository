@@ -22,19 +22,19 @@ def create_programs():
 def create_barostats():
     user = toolkit.get_action('get_site_user')({'ignore_auth': True}, {})
     context = {'user': user['name']}
-    vocab_tags = (u'Berendsen', u'Monte Carlo', u'None', u'Pressure Constraining', u'Nose-Hover', u'Isotropic') #Add thermostat types here
+    vocab_tags = (u'Berendsen', u'Monte Carlo', u'None', u'Pressure Constraining', u'Nose-Hover', u'Isotropic') #Add barostat types here
     try:
         data = {'id': 'barostats'}
         toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the thermostat vocabulary to
                                                              # see if it already exists.
-        data_vocab_old = {'vocabulary_id': data[id]}
-        old_tags = ckan.logic.action.get.tag_list(context, data_vocab_old)
-        for tag in vocab_tags:
-            if tag not in old_tags:
-                logging.info(
-                    "Adding tag {0} to vocab 'barostats'".format(tag))
-                data = {'name': tag, 'vocabulary_id': vocab['id']}
-                toolkit.get_action('tag_create')(context, data)
+        # data_vocab_old = {'vocabulary_id': data[id]}
+        # old_tags = ckan.logic.action.get.tag_list(context, data_vocab_old)
+        # for tag in vocab_tags:
+        #     if tag not in old_tags:
+        #         logging.info(
+        #             "Adding tag {0} to vocab 'barostats'".format(tag))
+        #         data = {'name': tag, 'vocabulary_id': vocab['id']}
+        #         toolkit.get_action('tag_create')(context, data)
 
         logging.info("barostats vocabulary already exists, skipping.")
 
@@ -56,14 +56,14 @@ def create_thermostats():
         data = {'id': 'thermostats'}
         toolkit.get_action('vocabulary_show')(context, data) # Attempts to retrieve the thermostat vocabulary to
                                                              # see if it already exists.
-        data_vocab_old = {'vocabulary_id': data[id]}
-        old_tags = ckan.logic.action.get.tag_list(context, data_vocab_old)
-        for tag in vocab_tags:
-            if tag not in old_tags:
-                logging.info(
-                    "Adding tag {0} to vocab 'thermostats'".format(tag))
-                data = {'name': tag, 'vocabulary_id': vocab['id']}
-                toolkit.get_action('tag_create')(context, data)
+        # data_vocab_old = {'vocabulary_id': data[id]}
+        # old_tags = ckan.logic.action.get.tag_list(context, data_vocab_old)
+        # for tag in vocab_tags:
+        #     if tag not in old_tags:
+        #         logging.info(
+        #             "Adding tag {0} to vocab 'thermostats'".format(tag))
+        #         data = {'name': tag, 'vocabulary_id': vocab['id']}
+        #         toolkit.get_action('tag_create')(context, data)
 
         logging.info("thermostats vocabulary already exists, skipping.")
     except toolkit.ObjectNotFound:
