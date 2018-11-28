@@ -46,6 +46,32 @@ def update_repository(
             public_hostname,
         )
 
+def where_in(name, value, big_range):
+    """Determines which bucket of big_range 'value' lies in."""
+    bottom = big_range[0]
+    top = big_range[1]
+    step = big_range[2]
+    i = 0
+    bot_range = bottom + i * step
+
+    while bot_range < top:
+        bot_range = bottom + i * step
+        top_range = bottom + (i + 1) * step
+        i += 1
+        if value >= bot_range and value < top_range:
+            tag = name +  " {0}-{1}".format(bot_range, top_range)
+            return tag
+
+def at_least(name, value, checkpoints):
+    """Returns a string stating the largest checkpoint value is greater than."""
+    checkpoints.insert(0, 0)
+    for checkpoint in checkpoints:
+        if checkpoint <= value:
+            maximum = checkpoint
+        else:
+            tag = name + " is at least {}".format(maximum)
+            return tag
+
 def update_dataset(
     dataset,
     dataset_path,
@@ -59,10 +85,18 @@ def update_dataset(
     program = config["program"]
 
     parameters = dataset_control(dataset_path, trajectory_data_path, program)
-    parameter_tags = ['barostat', 'thermostat', 'program']
+    parameter_tags = ['barostat', 'thermostat', 'program', 'temperature', 'runtime']
     for tag in parameter_tags:
         try:
             value = parameters[tag]
+            if tag is ('temperature'):
+                try:
+                    value = where_in('Temperature', value, (200, 400, 10))
+                except TypeError:
+                    value = float(value[0])
+                    value = where_in('Temperature', value, (200, 400, 10))
+            if tag is 'runtime':
+                value = at_least('Run time', value, [0.01, 0.1, 1, 10, 100, 1000])
             tags.append(dict(name=value))
         except KeyError:
             continue

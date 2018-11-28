@@ -28,7 +28,7 @@ class Run_Data(object):
 
     def calc_runtime(self):
         timestep = self._parameters['timestep']
-        self._parameters['runtime'] = timestep * self._parameters['num_timestep']
+        self._parameters['runtime'] = (timestep * self._parameters['num_timestep'])/1000
 
     def get_parameters(self):
         return self._parameters

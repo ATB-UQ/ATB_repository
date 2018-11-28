@@ -8,7 +8,7 @@ class GromosData(Run_Data):
         super().__init__(file)
                         # key, id in file, data type, number to multiply by to standardise
         self._tags = [('num_timestep','NSTLIM', int), ('timestep', 'DT', float), ('initial_temperature', 'TEMPI', float),\
-                      ('pressure', 'PRES0', float, 16.6057), ('bath_temperature', 'TEMP0', float), ('barostat', 'NTP', int)
+                      ('pressure', 'PRES0', float), ('bath_temperature', 'TEMP0', float), ('barostat', 'NTP', int)
                       ]
 
         self._barostat = {0: 'None', 1: 'Pressure Constraining', 2: 'Berendsen', 3: 'Nose-Hover'}
@@ -67,6 +67,9 @@ class GromosData(Run_Data):
                 key = line[0].split('(')[0]
                 if key == 'PRES0':
                     value = self._file_list[i+1].split()[0]
+                    decimals = len(value) - 1 #Minus 1 to remove the decimal
+                    value = float(value) * 16.6057
+                    value = round(value, decimals)
                     extra_values[key] = value
                 elif key == 'TEMP0':
                     value = self._file_list[i+2].split()[0]

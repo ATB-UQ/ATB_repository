@@ -8,7 +8,7 @@ class AmberData(Run_Data):
         super().__init__(file)
                         # key, id in file, data type, number to multiply by to standardise
         self._tags = [('num_timestep','nstlim', int), ('timestep', 'dt', float), ('temperature', 'temp0', float),\
-                      ('cutoff', 'cut', float), ('shake_tolerance', 'tol', float), ('barostat', 'barostat', int), \
+                      ('cutoff', 'cut', float), ('shake_tolerance', 'tol', float), ('barostat', 'barostat', int),\
                       ('pressure', 'pres0', float), ('thermostat', 'ntt', int)]
 
         self._barostat = {1:'Berendsen', 2:'Monte Carlo'}
