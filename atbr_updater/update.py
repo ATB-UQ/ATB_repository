@@ -36,7 +36,7 @@ def update_repository(
     datasets = [ path.basename(p) for p in dataset_paths ]
 
     for dataset, dataset_path in zip(datasets, dataset_paths):
-        print("Processing "+dataset+"...")
+        ("Processing "+dataset+"...")
         update_dataset(
             dataset,
             dataset_path,
@@ -45,6 +45,7 @@ def update_repository(
             organization,
             public_hostname,
         )
+        print("Updated "+dataset)
 
 def where_in(name, value, big_range):
     """Determines which bucket of big_range 'value' lies in."""
@@ -63,14 +64,13 @@ def where_in(name, value, big_range):
             return tag
 
 def at_least(name, value, checkpoints):
-    """Returns a string stating the largest checkpoint value is greater than."""
+    """Returns a string stating the largest checkpoint value is greater than. DO NOT USE FOR NEGATIVE NUMBERS"""
     checkpoints.insert(0, 0)
     for checkpoint in checkpoints:
         if checkpoint <= value:
             maximum = checkpoint
-        else:
-            tag = name + " is at least {}".format(maximum)
-            return tag
+    tag = name + " is at least {}".format(maximum)
+    return tag
 
 def update_dataset(
     dataset,
@@ -85,19 +85,25 @@ def update_dataset(
     program = config["program"]
 
     parameters = dataset_control(dataset_path, trajectory_data_path, program)
-    parameter_tags = ['barostat', 'thermostat', 'program', 'temperature', 'runtime']
+    parameter_tags = ['num_atoms', 'barostat', 'thermostat', 'temperature', 'runtime']
+
     for tag in parameter_tags:
         try:
             value = parameters[tag]
-            if tag is ('temperature'):
-                try:
-                    value = where_in('Temperature', value, (200, 400, 10))
-                except TypeError:
-                    value = float(value[0])
-                    value = where_in('Temperature', value, (200, 400, 10))
-            if tag is 'runtime':
-                value = at_least('Run time', value, [0.01, 0.1, 1, 10, 100, 1000])
-            tags.append(dict(name=value))
+            if (type(value) is not int) or (value >= 0):
+                if tag is 'temperature':
+                    try:
+                        value = where_in('Temperature', value, (200, 400, 10))
+                    except TypeError:
+                        value = float(value[0])
+                        value = where_in('Temperature', value, (200, 400, 10))
+                elif tag is 'runtime':
+                    value = at_least('Run time', value, [0.01, 0.1, 1, 10, 100, 1000])
+                elif tag is 'num_atoms':
+                    value = at_least('Number of atoms', value, [10, 100, 1000, 10000])
+                else:
+                    value = tag + ' is ' + value
+                tags.append(dict(name=value))
         except KeyError:
             continue
 
@@ -108,9 +114,7 @@ def update_dataset(
         create_dataset(dataset, dataset_path, organization)
         package_data = api.action.package_show( id = dataset.lower() )
 
-    # printdict(parameters)
-    updated_data = { **package_data, **parameters, **config }
-    # printdict(updated_data)
+    updated_data = { **package_data, **config} # **parameters
 
     dataset_dir = path.join(trajectory_data_path, dataset_path)
     public_dataset_dir = path.join(trajectory_data_path, dataset)
@@ -136,9 +140,11 @@ def update_dataset(
 
     if not "tags" in updated_data:
         updated_data["tags"] = []
+
     for tag in tags:
         if not has_tag(tag, updated_data["tags"]):
             updated_data["tags"].append(tag)
+
     api.action.package_update(**updated_data)
 
     # printdict(api.action.package_show( id = dataset.lower() ))
@@ -147,12 +153,13 @@ def update_dataset(
 
 def has_tag(tag_data, existing_tags):
     vid = "vocabulary_id"
+
     for existing_tag in existing_tags:
         if existing_tag["name"] == tag_data["name"]:
             if vid in existing_tag and vid in tag_data:
                 if existing_tag[vid] == tag_data[vid]:
                     return True
-            elif not (vid in existing_tag or vid in tag_data):
+            elif (vid in existing_tag) and (vid not in tag_data):
                 return True
     return False
 
@@ -320,25 +327,32 @@ def dataset_config(dataset, dataset_path, trajectory_data_path):
 
 def dataset_control(dataset_path, trajectory_data_path, program):
     control_dir = path.join(trajectory_data_path, dataset_path, 'control')
-    #gets control data from first file in control directory, assuming that all runs have same parameters.
+    energy_dir = path.join(trajectory_data_path, dataset_path, 'energy')
+    log_dir = path.join(trajectory_data_path, dataset_path, 'log')
+
+    #gets data from first file in control directory, assuming that all runs have same parameters.
     control_file = path.join(control_dir, listdir(control_dir)[0])
+    log_file = path.join(log_dir, listdir(log_dir)[0])
+    energy_file = path.join(energy_dir, listdir(energy_dir)[0])
+
+    files = [control_file, log_file, energy_file]
+
     parameters = {}
     if 'AMBER' in program:
-        data = parsers.AmberData(control_file)
+        data = parsers.AmberData(*files)
         parameters = data.get_parameters()
 
     if 'GROMOS' in program:
-        data = parsers.GromosData(control_file)
+        data = parsers.GromosData(*files)
         parameters = data.get_parameters()
 
     if 'GROMACS' in program:
-        data = parsers.GromacsData(control_file)
+        data = parsers.GromacsData(*files)
         parameters = data.get_parameters()
 
-    runtime = parameters['runtime']
-    simulation_time = len(listdir(control_dir)) * runtime
+    simulation_time = len(listdir(control_dir)) * parameters['runtime']
     parameters['simulation_time'] = simulation_time
-    printdict(parameters)
+    # printdict(parameters)
     return parameters
 
 

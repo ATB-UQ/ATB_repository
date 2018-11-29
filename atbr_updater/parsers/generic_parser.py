@@ -1,7 +1,9 @@
 class Run_Data(object):
     """Parent class for runs. """
-    def __init__(self, control_file):
-        self._file = control_file
+    def __init__(self, control_file, log_file=None, energy_file=None):
+        self._control_file = control_file
+        self._log_file = log_file
+        self._energy_file = energy_file
 
         self._parameters = {}
         self._tags = []

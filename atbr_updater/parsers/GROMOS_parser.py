@@ -4,8 +4,8 @@ class GromosData(Run_Data):
     """A subclass of the Run_Data, to parse Gromos files only.
     It should be created once the file type is known."""
 
-    def __init__(self, file):
-        super().__init__(file)
+    def __init__(self, control_file, log_file, energy_file):
+        super().__init__(control_file, log_file, energy_file)
                         # key, id in file, data type, number to multiply by to standardise
         self._tags = [('num_timestep','NSTLIM', int), ('timestep', 'DT', float), ('initial_temperature', 'TEMPI', float),\
                       ('pressure', 'PRES0', float), ('bath_temperature', 'TEMP0', float), ('barostat', 'NTP', int)
@@ -15,6 +15,8 @@ class GromosData(Run_Data):
         self._thermostat = {1: 'Berendsen'}
 
         self._parameters = {'program': 'GROMOS'}
+        self._parameters['num_atoms'] = self.find_atoms()
+        self._parameters['box_side'] = -1
         self.find_parameters()
         self.calc_runtime()
 
@@ -68,7 +70,7 @@ class GromosData(Run_Data):
                 if key == 'PRES0':
                     value = self._file_list[i+1].split()[0]
                     decimals = len(value) - 1 #Minus 1 to remove the decimal
-                    value = float(value) * 16.6057
+                    value = float(value) * 16.6057 #Convert pressure to bars
                     value = round(value, decimals)
                     extra_values[key] = value
                 elif key == 'TEMP0':
@@ -77,3 +79,13 @@ class GromosData(Run_Data):
             except IndexError:
                 continue
         return extra_values
+
+    def find_atoms(self):
+        with open(self._log_file, 'r') as file:
+            for line in file:
+                line = line.rstrip()
+                if 'number of atoms' in line:
+                    line = line.split()
+                    num_atoms = line[-1]
+        print(num_atoms)
+        return int(num_atoms)

@@ -4,14 +4,16 @@ class GromacsData(Run_Data):
     """A subclass of the Run_Data, to parse GROMACS files only.
     It should be created once the file type is known."""
 
-    def __init__(self, file):
-        super().__init__(file)
-
+    def __init__(self, control_file, log_file, energy_file):
+        super().__init__(control_file, log_file, energy_file)
+                    # key, id in file, data type, number to multiply by to standardise
         self._tags = [('num_timestep','nsteps', int), ('timestep', 'dt', float), ('temperature', 'ref_t', array),\
                       ('cutoff', 'rvdw', float), ('shake_tolerance', 'tol', float), ('barostat', 'Pcoupltype', str), \
                       ('pressure', 'tau-p', float), ('thermostat', 'tcoupl', str)]
 
         self._parameters = {'program': 'GROMACS'}
+        self._parameters['num_atoms'] = -1
+        self._parameters['box_side'] = -1
         self.find_parameters()
         self.calc_runtime()
 
