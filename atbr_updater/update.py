@@ -47,6 +47,17 @@ def update_repository(
         )
         print("Updated "+dataset)
 
+def param2extras(parameters):
+    extra_dict = {}
+    extra_params = []
+    used_params = ['pressure', 'runtime', 'simulation_time', 'temperature']
+    for key in parameters:
+        if key in used_params:
+            value = parameters[key]
+            extra_params.append({'key': key, 'value': value})
+    extra_dict['extras'] = extra_params
+    return extra_dict
+
 def where_in(name, value, big_range):
     """Determines which bucket of big_range 'value' lies in."""
     bottom = big_range[0]
@@ -116,7 +127,8 @@ def update_dataset(
         create_dataset(dataset, dataset_path, organization)
         package_data = api.action.package_show( id = dataset.lower() )
 
-    updated_data = { **package_data, **config} # **parameters
+    del package_data['extras']
+    updated_data = { **package_data, **config, **parameters}
 
     dataset_dir = path.join(trajectory_data_path, dataset_path)
     public_dataset_dir = path.join(trajectory_data_path, dataset)
@@ -354,7 +366,7 @@ def dataset_control(dataset_path, trajectory_data_path, program):
 
     simulation_time = len(listdir(control_dir)) * parameters['runtime']
     parameters['simulation_time'] = simulation_time
-    # printdict(parameters)
+
     return parameters
 
 
