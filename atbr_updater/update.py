@@ -85,7 +85,7 @@ def update_dataset(
     program = config["program"]
 
     parameters = dataset_control(dataset_path, trajectory_data_path, program)
-    parameter_tags = ['num_atoms', 'barostat', 'thermostat', 'temperature', 'runtime']
+    parameter_tags = ['num_atoms', 'barostat', 'thermostat', 'temperature', 'runtime', 'box_side']
 
     for tag in parameter_tags:
         try:
@@ -101,6 +101,8 @@ def update_dataset(
                     value = at_least('Run time', value, [0.01, 0.1, 1, 10, 100, 1000])
                 elif tag is 'num_atoms':
                     value = at_least('Number of atoms', value, [10, 100, 1000, 10000])
+                elif tag is 'box_side':
+                    value = at_least('Box side size', value, [0.1, 1, 10, 100, 1000, 10000])
                 else:
                     value = tag + ' is ' + value
                 tags.append(dict(name=value))
