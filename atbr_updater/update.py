@@ -37,14 +37,17 @@ def update_repository(
 
     for dataset, dataset_path in zip(datasets, dataset_paths):
         print ("Processing "+dataset+"...")
-        update_dataset(
-            dataset,
-            dataset_path,
-            trajectory_data_path,
-            public_data_path,
-            organization,
-            public_hostname,
-        )
+        try:
+            update_dataset(
+                dataset,
+                dataset_path,
+                trajectory_data_path,
+                public_data_path,
+                organization,
+                public_hostname,
+            )
+        except IndexError:
+            continue
         print("Updated "+dataset)
 
 def param2extras(parameters):
