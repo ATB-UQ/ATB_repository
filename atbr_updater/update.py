@@ -34,6 +34,7 @@ def update_repository(
 ):
     dataset_paths = find_datasets(trajectory_data_path)
     datasets = [ path.basename(p) for p in dataset_paths ]
+    failed_datasets = []
 
     for dataset, dataset_path in zip(datasets, dataset_paths):
         print ("Processing "+dataset+"...")
@@ -47,6 +48,10 @@ def update_repository(
                 public_hostname,
             )
         except IndexError:
+            failed_datasets.append([dataset, 'missing files'])
+            continue
+        except PermissionError:
+            failed_datasets.append([dataset, 'no permission'])
             continue
         print("Updated "+dataset)
 
