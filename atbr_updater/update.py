@@ -36,7 +36,7 @@ def update_repository(
     datasets = [ path.basename(p) for p in dataset_paths ]
 
     for dataset, dataset_path in zip(datasets, dataset_paths):
-        ("Processing "+dataset+"...")
+        print ("Processing "+dataset+"...")
         update_dataset(
             dataset,
             dataset_path,
