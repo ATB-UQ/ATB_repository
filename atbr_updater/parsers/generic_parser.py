@@ -1,4 +1,4 @@
-class Run_Data(object):
+class RunData(object):
     """Parent class for runs. """
     def __init__(self, control_file, log_file=None, energy_file=None):
         self._control_file = control_file
@@ -12,13 +12,15 @@ class Run_Data(object):
         with open(control_file) as file:
             for line in file:
                 line = line.rstrip()
-                line= line.strip()
+                line = line.strip()
                 self._file_list.append(line)
 
         if self._file_list[2] == '&cntrl':
-            self._type = 'amber'
+            self._type = 'AMBER'
         elif self._file_list[0] == 'TITLE':
-            self._type = 'gromos'
+            self._type = 'GROMOS'
+        if ';' in self._file_list[1]:
+            self._type = 'GROMACS'
 
 
     def get_type(self):

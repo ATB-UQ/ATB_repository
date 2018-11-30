@@ -1,6 +1,6 @@
 from parsers.generic_parser import *
 
-class AmberData(Run_Data):
+class AmberData(RunData):
     """A subclass of the Run_Data, to parse Amber files only.
     It should be created once the file type is known."""
 

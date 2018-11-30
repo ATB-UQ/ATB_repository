@@ -1,6 +1,6 @@
 from parsers.generic_parser import *
 
-class GromacsData(Run_Data):
+class GromacsData(RunData):
     """A subclass of the Run_Data, to parse GROMACS files only.
     It should be created once the file type is known."""
 

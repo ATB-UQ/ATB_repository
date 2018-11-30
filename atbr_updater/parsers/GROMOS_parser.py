@@ -1,6 +1,6 @@
 from parsers.generic_parser import Run_Data
 
-class GromosData(Run_Data):
+class GromosData(RunData):
     """A subclass of the Run_Data, to parse Gromos files only.
     It should be created once the file type is known."""
 

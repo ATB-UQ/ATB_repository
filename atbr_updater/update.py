@@ -102,7 +102,10 @@ def update_dataset(
 ):
     # dictionary of metadata, tags of dataset
     config, tags = dataset_config(dataset, dataset_path, trajectory_data_path)
-    program = config["program"]
+    try:
+        program = config["program"]
+    except KeyError:
+        program = []
 
     parameters = dataset_control(dataset_path, trajectory_data_path, program)
     parameter_tags = ['num_atoms', 'barostat', 'thermostat', 'temperature', 'runtime', 'box_side']
@@ -329,10 +332,11 @@ def find_datasets(
 
 def dataset_config(dataset, dataset_path, trajectory_data_path):
     config_path = path.join(trajectory_data_path, dataset_path, "atbrepo.yml")
+
     if not path.exists(config_path):
         config_path = path.join(trajectory_data_path, dataset_path, "metadata.yml")
-        if not path.exists(config_path):
-            raw_config = {}
+    elif not path.exists(config_path):
+        raw_config = {}
     else:
         try:
             with open(config_path, "r") as c:
@@ -384,15 +388,19 @@ def dataset_control(dataset_path, trajectory_data_path, program):
     files = [control_file, log_file, energy_file]
 
     parameters = {}
+
+    if not program: #checks if list is empty
+        type_find = RunData(*files)
+        program.append(type_find.get_type())
+
     if 'AMBER' in program:
         data = parsers.AmberData(*files)
         parameters = data.get_parameters()
-
-    if 'GROMOS' in program:
+    elif 'GROMOS' in program:
         data = parsers.GromosData(*files)
         parameters = data.get_parameters()
 
-    if 'GROMACS' in program:
+    elif 'GROMACS' in program:
         data = parsers.GromacsData(*files)
         parameters = data.get_parameters()
 
