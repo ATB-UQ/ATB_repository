@@ -1,7 +1,5 @@
 {% ckan_extends %}
 
-{("Testing testing - should be top"}}
-
 {% block header %}
   {{ super() }}
 
@@ -44,7 +42,6 @@
 
 {% block package_additional_info %}
     {% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
-    <p> at bottom of additional info </p>
 {% endblock %}
 
 {% block package_resources %}
