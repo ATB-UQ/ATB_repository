@@ -1,4 +1,4 @@
-from parsers.generic_parser import Run_Data
+from parsers.generic_parser import *
 
 class GromosData(RunData):
     """A subclass of the Run_Data, to parse Gromos files only.
