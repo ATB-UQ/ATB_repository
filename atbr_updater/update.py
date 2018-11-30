@@ -335,7 +335,8 @@ def dataset_config(dataset, dataset_path, trajectory_data_path):
 
     if not path.exists(config_path):
         config_path = path.join(trajectory_data_path, dataset_path, "metadata.yml")
-    elif not path.exists(config_path):
+
+    if not path.exists(config_path):
         raw_config = {}
     else:
         try:
