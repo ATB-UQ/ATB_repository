@@ -36,6 +36,14 @@
 
 {% endblock %}
 
+ {% block package_tags %}
+    {{ super() }}
+{% endblock %}
+
 {% block package_additional_info %}
     {% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
+{% endblock %}
+
+{% block package_resources %}
+  {{ super() }}
 {% endblock %}
