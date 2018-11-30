@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.6
-
+import yaml
 import sys
 from ckanapi import RemoteCKAN, NotAuthorized
 from os import path, listdir, symlink, makedirs, readlink
