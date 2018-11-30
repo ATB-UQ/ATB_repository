@@ -27,7 +27,7 @@ api = RemoteCKAN(
 
 def find_all():
     """Finds all datasets in the database"""
-    return api.action.package_show()
+    return api.action.package_list()
 
 def delete_all(datasets):
     for dataset in datasets:
@@ -40,17 +40,17 @@ def purge_all(datasets):
 def main():
     confirm = input("Are you sure you want to delete all datasets? They can be recovered from the trash afterwards. Type 'yes' to confirm.")
     datasets = find_all()
-    print (datasets)
     if confirm == 'yes':
         delete_all(datasets)
-    else:
-        print ('Canceling delete')
-    confirm = input("Are you sure you want to purge all datasets? They will be gone FOREVER! Type 'yes' to confirm.")
-    if confirm == 'yes':
-        input("Are you sure? Type 'sure' to confirm. ")
-        if confirm == 'sure':
-            purge_all(datasets)
-    else:
-        print ('Canceling purge')
+        purge_all(datasets)
+    # else:
+    #     print ('Canceling delete')
+    # confirm = input("Are you sure you want to purge all datasets? They will be gone FOREVER! Type 'yes' to confirm.")
+    # if confirm == 'yes':
+    #     input("Are you sure? Type 'sure' to confirm. ")
+    #     if confirm == 'sure':
+    #
+    # else:
+    #     print ('Canceling purge')
 
 main()
