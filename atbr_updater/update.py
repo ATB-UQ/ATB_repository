@@ -47,13 +47,14 @@ def update_repository(
                 organization,
                 public_hostname,
             )
-        except IndexError:
-            failed_datasets.append([dataset, 'missing files'])
-            continue
-        except PermissionError:
-            failed_datasets.append([dataset, 'no permission'])
+        except Exception as e:
+            print (dataset + " failed, is " + e)
+            failed_datasets.append(dataset)
             continue
         print("Updated "+dataset)
+    with open('errors.txt', 'w') as file:
+        for dataset in failed_datasets:
+            file.write(dataset + '\n')
 
 def param2extras(parameters):
     extra_dict = {}
@@ -331,14 +332,20 @@ def dataset_config(dataset, dataset_path, trajectory_data_path):
     if not path.exists(config_path):
         raw_config = {}
     else:
-        with open(config_path, "r") as c:
-            raw_config = yaml.load(c)
+        try:
+            with open(config_path, "r") as c:
+                raw_config = yaml.load(c)
+        except FileNotFoundError:
+            raise Exception("missing config file")
     USE_KEYS = ("title", "notes", "author", "author_email", "program")
     config = { #dictionary of the metadata
         key:raw_config[key] \
             for key in raw_config if key in USE_KEYS
     }
-    tags = [ dict(name=tag) for tag in raw_config["tags"] ] #creates a list of dictionaries of form {name=tag}
+    try:
+        tags = [ dict(name=tag) for tag in raw_config["tags"] ] #creates a list of dictionaries of form {name=tag}
+    except KeyError:
+        tags = {} #If missing tags, just has none
    #special_tags = raw_config["special_tags"]
    #for tag_type in special_tags:
    #    tags.append( dict(name=special_tags[tag_type], vocabulary_id=tag_type) )
@@ -353,9 +360,24 @@ def dataset_control(dataset_path, trajectory_data_path, program):
     log_dir = path.join(trajectory_data_path, dataset_path, 'log')
 
     #gets data from first file in control directory, assuming that all runs have same parameters.
-    control_file = path.join(control_dir, listdir(control_dir)[0])
-    log_file = path.join(log_dir, listdir(log_dir)[0])
-    energy_file = path.join(energy_dir, listdir(energy_dir)[0])
+    try:
+        control_file = path.join(control_dir, listdir(control_dir)[0])
+    except IndexError:
+        raise Exception("missing control file")
+    except PermissionError:
+        raise Exception("missing permissions")
+    try:
+        log_file = path.join(log_dir, listdir(log_dir)[0])
+    except IndexError:
+        raise Exception("missing log file")
+    except PermissionError:
+        raise Exception("missing permissions")
+    try:
+        energy_file = path.join(energy_dir, listdir(energy_dir)[0])
+    except IndexError:
+        raise Exception("missing energy file")
+    except PermissionError:
+        raise Exception("missing permissions")
 
     files = [control_file, log_file, energy_file]
 
