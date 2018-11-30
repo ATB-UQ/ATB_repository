@@ -1,9 +1,6 @@
 #!/usr/bin/env python3.6
 
 import sys
-import argparse
-import yaml
-import secrets
 from ckanapi import RemoteCKAN, NotAuthorized
 from os import path, listdir, symlink, makedirs, readlink
 import parsers
