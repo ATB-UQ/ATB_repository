@@ -7,6 +7,7 @@ import secrets
 from ckanapi import RemoteCKAN, NotAuthorized
 from os import path, listdir, symlink, makedirs, readlink
 import parsers
+from parsers import RunData
 
 with open("config.yml", "r") as c:
     config = yaml.load(c)
@@ -144,7 +145,7 @@ def update_dataset(
 
     dataset_dir = path.join(trajectory_data_path, dataset_path)
     public_dataset_dir = path.join(trajectory_data_path, dataset)
-    subdirs = [ d for d in listdir(dataset_dir) if not d==("atbrepo.yml" or "metadata.yml")]
+    subdirs = [ d for d in listdir(dataset_dir) if not (d=="atbrepo.yml" or d=="metadata.yml")]
     resources = []
     for s,subdir in enumerate(subdirs):
         resources += update_resources(
@@ -352,7 +353,7 @@ def dataset_config(dataset, dataset_path, trajectory_data_path):
     try:
         tags = [ dict(name=tag) for tag in raw_config["tags"] ] #creates a list of dictionaries of form {name=tag}
     except KeyError:
-        tags = {} #If missing tags, just has none
+        tags = [] #If missing tags, just has none
    #special_tags = raw_config["special_tags"]
    #for tag_type in special_tags:
    #    tags.append( dict(name=special_tags[tag_type], vocabulary_id=tag_type) )
@@ -391,6 +392,7 @@ def dataset_control(dataset_path, trajectory_data_path, program):
     parameters = {}
 
     if not program: #checks if list is empty
+        program = []
         type_find = RunData(*files)
         program.append(type_find.get_type())
 
