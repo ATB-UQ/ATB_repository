@@ -48,7 +48,7 @@ def update_repository(
                 public_hostname,
             )
         except Exception as e:
-            print (dataset + " failed, is " + e)
+            print (dataset + " failed, is " + str(e))
             failed_datasets.append(dataset)
             continue
         print("Updated "+dataset)
