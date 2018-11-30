@@ -141,7 +141,7 @@ def update_dataset(
 
     dataset_dir = path.join(trajectory_data_path, dataset_path)
     public_dataset_dir = path.join(trajectory_data_path, dataset)
-    subdirs = [ d for d in listdir(dataset_dir) if not d=="atbrepo.yml" ]
+    subdirs = [ d for d in listdir(dataset_dir) if not d==("atbrepo.yml" or "metadata.yml")]
     resources = []
     for s,subdir in enumerate(subdirs):
         resources += update_resources(
@@ -330,7 +330,9 @@ def find_datasets(
 def dataset_config(dataset, dataset_path, trajectory_data_path):
     config_path = path.join(trajectory_data_path, dataset_path, "atbrepo.yml")
     if not path.exists(config_path):
-        raw_config = {}
+        config_path = path.join(trajectory_data_path, dataset_path, "metadata.yml")
+        if not path.exists(config_path):
+            raw_config = {}
     else:
         try:
             with open(config_path, "r") as c:
@@ -431,8 +433,8 @@ else:
               trajectory_data_path+"\n"
         )
         exit(1)
-    if not "atbrepo.yml" in listdir(args.dir):
-        sys.stderr.write("No atbrepo.yml file foud in "+args.dir+"\n")
+    if not ("atbrepo.yml" or "metadata.yml") in listdir(args.dir):
+        sys.stderr.write("No atbrepo.yml or metadata.yml file found in "+args.dir+"\n")
         exit(1)
     update_dataset(
         path.basename(args.dir),
