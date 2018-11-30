@@ -33,12 +33,11 @@
     <p><strong>Barostat</strong>: {{ pkg.barostat[0] }}</p>
     </section>
   {% endif %}
-
 {% endblock %}
 
  {% block package_tags %}
     {{ super() }}
-{% endblock %}
+ {% endblock %}
 
 {% block package_additional_info %}
     {% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
@@ -47,5 +46,3 @@
 {% block package_resources %}
   {{ super() }}
 {% endblock %}
-
-{("Testing testing - should be bottom"}}

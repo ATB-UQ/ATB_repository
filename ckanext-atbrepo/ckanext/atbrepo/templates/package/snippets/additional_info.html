@@ -32,4 +32,12 @@
       <td class="dataset-details">{{ pkg_dict.simulation_time }}</td>
     </tr>
   {% endif %}
+
+  {% if pkg_dict.num_atoms %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Number of Atoms") }}</th>
+      <td class="dataset-details">{{ pkg_dict.num_atoms }}</td>
+    </tr>
+  {% endif %}
+
 {% endblock %}

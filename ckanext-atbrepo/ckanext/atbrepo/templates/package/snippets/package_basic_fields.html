@@ -17,4 +17,7 @@
 
   {{ form.input('runtime', label=_('Runtime'), id='field-runtime', placeholder=_('runtime'),
   value=data.runtime, error=errors.runtime, classes=['control-medium']) }}
+
+  {{ form.input('num_atoms', label=_('Number of Atoms'), id='field-num_atoms', placeholder=_('num_atoms'),
+  value=data.num_atoms, error=errors.num_atoms, classes=['control-medium']) }}
 {% endblock %}

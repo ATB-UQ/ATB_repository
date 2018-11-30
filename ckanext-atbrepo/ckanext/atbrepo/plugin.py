@@ -153,6 +153,9 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
         'runtime': [
             toolkit.get_validator('ignore_missing'),
             toolkit.get_converter('convert_to_extras')],
+        'num_atoms': [
+            toolkit.get_validator('ignore_missing'),
+            toolkit.get_converter('convert_to_extras')],
         })
 
         # Add program tags
@@ -206,6 +209,9 @@ class AtbrepoPlugin(plugins.SingletonPlugin,  toolkit.DefaultDatasetForm):
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_from_extras')],
             'runtime': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_from_extras')],
+            'num_atoms': [
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_from_extras')],
         })
