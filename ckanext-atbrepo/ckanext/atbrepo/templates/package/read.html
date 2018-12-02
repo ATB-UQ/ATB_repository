@@ -34,7 +34,7 @@
     </section>
   {% endif %}
 
-  {% for dict_item in pkg %}
+  {% for dict_item in pkg.get('extras') %}
       {{dict_item}}
   {% endfor %}
 
