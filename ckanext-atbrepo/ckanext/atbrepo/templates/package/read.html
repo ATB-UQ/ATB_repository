@@ -40,6 +40,10 @@
     </section>
   {% endif %}
 
+  {% for k,v in pkg.iteritems() %}
+    - {{ k }}
+  {% endfor %}
+
 {% endblock %}
 
  {% block package_tags %}
