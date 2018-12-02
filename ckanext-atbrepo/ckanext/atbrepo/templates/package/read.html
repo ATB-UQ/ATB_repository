@@ -33,6 +33,13 @@
     <p><strong>Barostat</strong>: {{ pkg.barostat[0] }}</p>
     </section>
   {% endif %}
+
+  {% if pkg_dict.pressure %}
+    <section id="dataset-pressure" class="resources module-content">
+    <p><strong>Pressure</strong>: {{ pkg_dict.pressure[0] }}</p>
+    </section>
+  {% endif %}
+
 {% endblock %}
 
  {% block package_tags %}
