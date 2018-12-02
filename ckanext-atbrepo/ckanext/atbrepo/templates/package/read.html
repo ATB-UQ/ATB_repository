@@ -34,14 +34,10 @@
     </section>
   {% endif %}
 
-  {% if pkg.get('extras') %}
-    <section id="dataset-pressure" class="resources module-content">
-    <p><strong>Pressure</strong>: {{ pkg.extras }}</p>
-    </section>
-  {% endif %}
-
-  {% for k,v in pkg.iteritems() %}
-    - {{ k }}
+  {% for dict_item in pkg %}
+   {% for key, value in dict_item.items() %}
+      <p><strong>{{key}}</strong>: {{value}}</p>
+   {% endfor %}
   {% endfor %}
 
 {% endblock %}

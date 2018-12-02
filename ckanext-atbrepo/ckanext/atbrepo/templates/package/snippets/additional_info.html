@@ -1,9 +1,7 @@
 {% ckan_extends %}
 
 {% block package_additional_info %}
-  {% for k,v in pkg_dict.iteritems() %}
-    - {{ k }}
-  {% endfor %}
+
   {{ super() }}
   {% if pkg_dict.temperature %}
     <tr>
