@@ -34,7 +34,7 @@
     </section>
   {% endif %}
 
-  {% if pkg.get('pressure') %}
+  {% if pkg.get('extras').get('pressure') %}
     <section id="dataset-pressure" class="resources module-content">
     <p><strong>Pressure</strong>: {{ pkg.pressure[0] }}</p>
     </section>
