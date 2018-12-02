@@ -35,19 +35,17 @@ def purge_all(datasets):
         api.action.dataset_purge(id = dataset)
 
 def main():
-    confirm = input("Are you sure you want to delete all datasets? They can be recovered from the trash afterwards. Type 'yes' to confirm.")
-    datasets = find_all()
-    if confirm == 'yes':
+    query = input("Type 'delete' to delete all data, or 'purge' to purge it. Deleted data can be recovered, "
+                    "but purged cannot.")
+    confirm = input("Are you sure? Type 'yes' to confirm.")
+    if (query == 'delete') and (confirm == 'yes'):
+        datasets = find_all()
         delete_all(datasets)
+
+    elif (query == 'purge' and confirm == 'yes'):
+        datasets = find_all()
         purge_all(datasets)
-    # else:
-    #     print ('Canceling delete')
-    # confirm = input("Are you sure you want to purge all datasets? They will be gone FOREVER! Type 'yes' to confirm.")
-    # if confirm == 'yes':
-    #     input("Are you sure? Type 'sure' to confirm. ")
-    #     if confirm == 'sure':
-    #
-    # else:
-    #     print ('Canceling purge')
+    else:
+        print ('Canceling delete')
 
 main()
