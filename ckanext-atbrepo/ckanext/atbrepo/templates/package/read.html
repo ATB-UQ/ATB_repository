@@ -35,9 +35,7 @@
   {% endif %}
 
   {% for dict_item in pkg %}
-   {% for key, value in dict_item.items() %}
-      <p><strong>{{key}}</strong>: {{value}}</p>
-   {% endfor %}
+      {{dict_item}}
   {% endfor %}
 
 {% endblock %}
