@@ -214,7 +214,7 @@ def update_resources(
         )
         name, sep, ext = resource.partition(".")
         if ext != ('nc' or 'tre.gz' or 'trc.gz'):
-            new_data["format"] = TXT
+            new_data["format"] = 'TXT'
         run_str = name.rpartition('_')[-1]
         if run_str.isdigit():
             run = int(run_str)
