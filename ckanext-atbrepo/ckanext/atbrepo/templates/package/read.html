@@ -34,9 +34,15 @@
     </section>
   {% endif %}
 
-  {% for extra in pkg.get('extras') if extra.get('key') != 'num_atoms' %}
-    <section id="dataset-"{{ extra.get('key')}} class="resources module-content">
-    <p><strong>{{extra.get('key')}}</strong>: {{ extra.get('value') }}</p>
+  {% set pkg_extras = {} %}
+
+  {% for extra in pkg.get('extras') %}
+    {% set pkg_extras[extra.get('key')] = extra.get('value') %}
+  {% endfor %}
+
+  {% for key, value in pkg_extras.items() if key is not in ['num_atoms', 'simulation_time'] %}
+    <section id="dataset-"{{ key }} class="resources module-content">
+    <p><strong>{{key.title()}}</strong>: {{ value }}</p>
     </section>
   {% endfor %}
 
