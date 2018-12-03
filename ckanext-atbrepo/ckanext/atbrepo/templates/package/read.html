@@ -15,42 +15,52 @@
 {% block package_description %}
   {{ super() }}
 
-  {# Add our custom program field to the dataset read page. #}
-  {% if pkg.get('program') %}
-    <section id="dataset-program" class="resources module-content">
-    <p><strong>Program</strong>: {{ pkg.program[0] }}</p>
-    </section>
-  {% endif %}
+  <table>
 
-  {% if pkg.get('thermostat') %}
-    <section id="dataset-thermostat" class="resources module-content">
-    <p><strong>Thermostat</strong>: {{ pkg.thermostat[0] }}</p>
-    </section>
-  {% endif %}
-
-  {% if pkg.get('barostat') %}
-    <section id="dataset-barostat" class="resources module-content">
-    <p><strong>Barostat</strong>: {{ pkg.barostat[0] }}</p>
-    </section>
-  {% endif %}
-
-  {% set pkg_extras = {} %}
-
-  {% for extra in pkg.get('extras') %}
-    {% do pkg_extras.update({extra.get('key'): extra.get('value')}) %}
-  {% endfor %}
-
-  {% for key, value in pkg_extras.items() %}
-    <section id="dataset-"{{ key }} class="resources module-content">
-    {% if key == 'num_atoms' %}
-      <p><strong>Number of Atoms</strong>: {{ value }}</p>
-    {% elif key == 'simulation_time' %}
-      <p><strong>Simulation Time</strong>(ns): {{ value }}</p>
-    {% else %}
-      <p><strong>{{key.title()}}</strong>: {{ value }}</p>
+    {# Add our custom program field to the dataset read page. #}
+    {% if pkg.get('program') %}
+      <tr>
+        <td><strong>Program</strong></td>
+        <td>{{ pkg.program[0] }}</td>
+      </tr>
     {% endif %}
-    </section>
-  {% endfor %}
+
+    {% if pkg.get('thermostat') %}
+      <tr>
+        <td><strong>Thermostat</strong></td>
+        <td>{{ pkg.thermostat[0] }}</td>
+      </tr>
+    {% endif %}
+
+    {% if pkg.get('barostat') %}
+      <tr>
+        <td><strong>Barostat</strong></td>
+        <td>{{ pkg.barostat[0] }}</td>
+      </tr>
+    {% endif %}
+
+    {% set pkg_extras = {} %}
+
+    {% for extra in pkg.get('extras') %}
+      {% do pkg_extras.update({extra.get('key'): extra.get('value')}) %}
+    {% endfor %}
+
+    {% for key, value in pkg_extras.items() %}
+      <tr>
+      {% if key == 'num_atoms' %}
+        <td><strong>Number of Atoms</strong></td>
+        <td>{{ value }}</td>
+      {% elif key == 'simulation_time' %}
+        <td><strong>Simulation Time</strong> (ns)</td>
+        <td>{{ value }}</td>
+      {% else %}
+        <td><strong>key.title()</strong></td>
+        <td>{{ value }}</td>
+      {% endif %}
+      </tr>
+
+    {% endfor %}
+  </table>
 
 {% endblock %}
 
