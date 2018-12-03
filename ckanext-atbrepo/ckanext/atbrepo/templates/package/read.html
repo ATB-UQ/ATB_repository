@@ -34,11 +34,13 @@
     </section>
   {% endif %}
 
+  {% pkg_extras = {} %}
+
   {% for extra in pkg.get('extras') %}
-    {% key = extra.get('key') %}
-    {% value = extra.get('value') %}
-    {% pkg_extras[key] = value %}
-    {% title = key.title() %}
+    key = extra.get('key')
+    value = extra.get('value')
+    pkg_extras[key] = value
+    title = key.title()
     <section id="dataset-"{{key}} class="resources module-content">
     <p><strong>{{title}}</strong>: {{ value }}</p>
     </section>
