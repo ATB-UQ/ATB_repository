@@ -34,8 +34,6 @@
     </section>
   {% endif %}
 
-  {% pkg_extras = {} %}
-
   {% for extra in pkg.get('extras') %}
     key = extra.get('key')
     value = extra.get('value')
