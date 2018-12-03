@@ -5,7 +5,7 @@ from ckanapi import RemoteCKAN, NotAuthorized
 from os import path, listdir, symlink, makedirs, readlink
 import parsers
 
-with open("config.yml", "r") as c:
+with open("admin_config.yml", "r") as c:
     config = yaml.load(c)
 
 api_key = config["API_key"]
