@@ -90,7 +90,7 @@ def at_least(name, value, checkpoints):
     for checkpoint in checkpoints:
         if checkpoint <= value:
             maximum = checkpoint
-    tag = name + " is at least {}".format(maximum)
+    tag = "Min" + name + " is {}".format(maximum)
     return tag
 
 def update_dataset(
@@ -124,9 +124,9 @@ def update_dataset(
                 elif tag is 'runtime':
                     value = at_least('Run time', value, [0.01, 0.1, 1, 10, 100, 1000])
                 elif tag is 'num_atoms':
-                    value = at_least('Number of atoms', value, [10, 100, 1000, 10000])
+                    value = at_least('NumAtoms', value, [10, 100, 1000, 10000])
                 elif tag is 'box_side':
-                    value = at_least('Box side size', value, [0.1, 1, 10, 100, 1000, 10000])
+                    value = at_least('BoxSize', value, [0.1, 1, 10, 100, 1000, 10000])
                 else:
                     value = tag + ' is ' + value
                 tags.append(dict(name=value))
