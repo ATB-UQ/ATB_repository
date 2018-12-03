@@ -40,11 +40,10 @@
       <p><strong>Number of Atoms</strong>: {{ extra.get('value') }}</p>
     {% elif extra.get('key') is 'simulation_time' %}
       <p><strong>Simulation Time</strong>(ns): {{ extra.get('value') }}</p>
-      </section>
     {% else %}
       <p><strong>{{extra.get('key')}}</strong>: {{ extra.get('value') }}</p>
-      </section>
     {% endif %}
+    </section>
   {% endfor %}
 
 {% endblock %}
