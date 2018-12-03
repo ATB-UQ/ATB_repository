@@ -4,9 +4,9 @@ class AmberData(RunData):
     """A subclass of the Run_Data, to parse Amber files only.
     It should be created once the file type is known."""
 
-    def __init__(self, control_file, log_file, energy_file):
+    def __init__(self, control_file, log_file=None, energy_file=None):
         super().__init__(control_file, log_file, energy_file)
-                        # key, id in file, data type, number to multiply by to standardise
+                        # key, id in file, data type, units (optional)
         self._tags = [('num_timestep','nstlim', int), ('timestep', 'dt', float), ('temperature', 'temp0', float),\
                       ('cutoff', 'cut', float), ('shake_tolerance', 'tol', float), ('barostat', 'barostat', int),\
                       ('pressure', 'pres0', float), ('thermostat', 'ntt', int)]

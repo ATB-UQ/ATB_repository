@@ -4,13 +4,13 @@ class GromosData(RunData):
     """A subclass of the Run_Data, to parse Gromos files only.
     It should be created once the file type is known."""
 
-    def __init__(self, control_file, log_file, energy_file):
+    def __init__(self, control_file, log_file=None, energy_file=None):
         super().__init__(control_file, log_file, energy_file)
                         # key, id in file, data type, number to multiply by to standardise
-        self._tags = [('num_timestep','NSTLIM', int), ('timestep', 'DT', float), ('initial_temperature', 'TEMPI', float),\
-                      ('pressure', 'PRES0', float), ('bath_temperature', 'TEMP0', float), ('barostat', 'NTP', int)
+        self._tags = [('num_timestep','NSTLIM', int), ('timestep', 'DT', float),\
+                      ('pressure', 'PRES0', float), ('temperature', 'TEMP0', float), ('barostat', 'NTP', int)
                       ]
-
+        #('initial_temperature', 'TEMPI', float),
         self._barostat = {0: 'None', 1: 'Pressure Constraining', 2: 'Berendsen', 3: 'Nose-Hover'}
         self._thermostat = {1: 'Berendsen'}
 
@@ -73,9 +73,14 @@ class GromosData(RunData):
                     value = float(value) * 16.6057 #Convert pressure to bars
                     value = round(value, decimals)
                     extra_values[key] = value
-                elif key == 'TEMP0':
-                    value = self._file_list[i+2].split()[0]
-                    extra_values[key] = value
+                elif key == 'NBATHS':
+                    nbaths = int(self._file_list[i+1])
+                    temperatures = []
+                    for x in range(nbaths):
+                        temperature = self._file_list[i+4+x].split()[0]
+                        temperatures.append(temperature)
+                        if all(x==temperatures[0] for x in temperatures):
+                            extra_values['TEMP0'] = temperatures[0]
             except IndexError:
                 continue
         return extra_values

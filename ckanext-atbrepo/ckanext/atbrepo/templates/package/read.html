@@ -41,6 +41,7 @@
       {% endif %}
 
       {% set pkg_extras = {} %}
+      {% set extras_units = {'pressure': 'atm', 'runtime': 'ns', 'temperature': 'K'} %}
 
       {% for extra in pkg.get('extras') %}
         {% do pkg_extras.update({extra.get('key'): extra.get('value')}) %}
@@ -55,7 +56,7 @@
           <td><strong>Simulation Time</strong> (ns)</td>
           <td>{{ value }}</td>
         {% else %}
-          <td><strong>{{key.title()}}</strong></td>
+          <td><strong>{{key.title()}}</strong> {{ extras_units.get(key) }}</td>
           <td>{{ value }}</td>
         {% endif %}
         </tr>

@@ -39,23 +39,23 @@ def update_repository(
 
     for dataset, dataset_path in zip(datasets, dataset_paths):
         print ("Processing "+dataset+"...")
-        try:
-            update_dataset(
-                dataset,
-                dataset_path,
-                trajectory_data_path,
-                public_data_path,
-                organization,
-                public_hostname,
-            )
-        except Exception as e:
-            print (dataset + " failed, is " + str(e))
-            failed_datasets.append(dataset)
-            continue
-        print("Updated "+dataset)
-    with open('errors.txt', 'w') as file:
-        for dataset in failed_datasets:
-            file.write(dataset + '\n')
+        # try:
+        update_dataset(
+            dataset,
+            dataset_path,
+            trajectory_data_path,
+            public_data_path,
+            organization,
+            public_hostname,
+        )
+    #     except Exception as e:
+    #         print (dataset + " failed, is " + str(e))
+    #         failed_datasets.append(dataset)
+    #         continue
+    #     print("Updated "+dataset)
+    # with open('errors.txt', 'w') as file:
+    #     for dataset in failed_datasets:
+    #         file.write(dataset + '\n')
 
 def param2extras(parameters):
     extra_dict = {}
@@ -119,7 +119,7 @@ def update_dataset(
                     try:
                         value = where_in('Temperature', value, (200, 400, 10))
                     except TypeError:
-                        value = float(value[0])
+                        value = float(value)
                         value = where_in('Temperature', value, (200, 400, 10))
                 elif tag is 'runtime':
                     value = at_least('Run time', value, [0.01, 0.1, 1, 10, 100, 1000])

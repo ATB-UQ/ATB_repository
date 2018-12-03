@@ -4,12 +4,12 @@ class GromacsData(RunData):
     """A subclass of the Run_Data, to parse GROMACS files only.
     It should be created once the file type is known."""
 
-    def __init__(self, control_file, log_file, energy_file):
+    def __init__(self, control_file, log_file=None, energy_file=None):
         super().__init__(control_file, log_file, energy_file)
                     # key, id in file, data type, number to multiply by to standardise
         self._tags = [('num_timestep','nsteps', int), ('timestep', 'dt', float), ('temperature', 'ref_t', array),\
                       ('cutoff', 'rvdw', float), ('shake_tolerance', 'tol', float), ('barostat', 'Pcoupltype', str), \
-                      ('pressure', 'tau-p', float), ('thermostat', 'tcoupl', str)]
+                      ('pressure', 'tau-p', float, 'atm'), ('thermostat', 'tcoupl', str)]
 
         self._parameters = {'program': 'GROMACS'}
         self._parameters['num_atoms'] = -1
@@ -27,7 +27,10 @@ class GromacsData(RunData):
                     try:
                         data = self.find_data(line, data_id)
                         if data is not None: # only adds the key/data pair if data is not none
-                            self._parameters[key] = data_type(data)
+                            value = data_type(data)
+                            if type(value) is list:
+                                value = value[0] #gets temperature
+                            self._parameters[key] = value
                     except (TypeError, AttributeError) as error:
                         continue
 

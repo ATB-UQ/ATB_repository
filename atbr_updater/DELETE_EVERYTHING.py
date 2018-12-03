@@ -36,8 +36,8 @@ def purge_all(datasets):
 
 def main():
     query = input("Type 'delete' to delete all data, or 'purge' to purge it. Deleted data can be recovered, "
-                    "but purged cannot.")
-    confirm = input("Are you sure? Type 'yes' to confirm.")
+                    "but purged cannot.\n")
+    confirm = input("Are you sure? Type 'yes' to confirm.\n")
     if (query == 'delete') and (confirm == 'yes'):
         datasets = find_all()
         delete_all(datasets)
