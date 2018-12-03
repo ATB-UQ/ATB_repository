@@ -3,42 +3,6 @@
 {% block package_additional_info %}
 
   {{ super() }}
-  {% if pkg_dict.temperature %}
-    <tr>
-      <th scope="row" class="dataset-label">{{ _("Temperature") }}</th>
-      <td class="dataset-details">{{ pkg_dict.temperature }}</td>
-    </tr>
-  {% endif %}
-  {% if pkg_dict.pressure %}
-    <tr>
-      <th scope="row" class="dataset-label">{{ _("Pressure") }}</th>
-      <td class="dataset-details">{{ pkg_dict.pressure }}</td>
-    </tr>
-  {% endif %}
-  {% if pkg_dict.initial_temperature %}
-    <tr>
-      <th scope="row" class="dataset-label">{{ _("Initial Temperature") }}</th>
-      <td class="dataset-details">{{ pkg_dict.initial_temperature }}</td>
-    </tr>
-  {% endif %}
-  {% if pkg_dict.runtime %}
-    <tr>
-      <th scope="row" class="dataset-label">{{ _("Runtime") }}</th>
-      <td class="dataset-details">{{ pkg_dict.runtime }}</td>
-    </tr>
-  {% endif %}
-  {% if pkg_dict.simulation_time %}
-    <tr>
-      <th scope="row" class="dataset-label">{{ _("Simulation Time") }}</th>
-      <td class="dataset-details">{{ pkg_dict.simulation_time }}</td>
-    </tr>
-  {% endif %}
 
-  {% if pkg_dict.num_atoms %}
-    <tr>
-      <th scope="row" class="dataset-label">{{ _("Number of Atoms") }}</th>
-      <td class="dataset-details">{{ pkg_dict.num_atoms }}</td>
-    </tr>
-  {% endif %}
 
 {% endblock %}
