@@ -37,7 +37,7 @@
   {% set pkg_extras = {} %}
 
   {% for extra in pkg.get('extras') %}
-    {% set pkg_extras[extra.get('key')] = extra.get('value') %}
+    {% do pkg_extras.update({extra.get('key'): extra.get('value')}) %}
   {% endfor %}
 
   {% for key, value in pkg_extras.items() if key is not in ['num_atoms', 'simulation_time'] %}
