@@ -42,9 +42,9 @@
 
   {% for key, value in pkg_extras.items() %}
     <section id="dataset-"{{ key }} class="resources module-content">
-    {% if key is 'num_atoms' %}
+    {% if key == 'num_atoms' %}
       <p><strong>Number of Atoms</strong>: {{ value }}</p>
-    {% elif key is 'simulation_time' %}
+    {% elif key == 'simulation_time' %}
       <p><strong>Simulation Time</strong>(ns): {{ value }}</p>
     {% else %}
       <p><strong>{{key.title())}}</strong>: {{ value }}</p>
