@@ -172,9 +172,9 @@ def update_dataset(
         if not has_tag(tag, updated_data["tags"]):
             updated_data["tags"].append(tag)
 
-    api.action.package_update(**updated_data)
-
-    # printdict(api.action.package_show( id = dataset.lower() ))
+    dataset = api.action.package_update(**updated_data)
+    package_dict = dict(package = dataset)
+    api.action.package_create_default_resource_views(package_dict)
 
     return updated_data
 
@@ -213,8 +213,7 @@ def update_resources(
             resource_type = path.basename(resource_dir),
         )
         name, sep, ext = resource.partition(".")
-        if ext != ('nc' or 'tre.gz' or 'trc.gz'):
-            new_data["format"] = 'text'
+        new_data["format"] = ext
         run_str = name.rpartition('_')[-1]
         if run_str.isdigit():
             run = int(run_str)
