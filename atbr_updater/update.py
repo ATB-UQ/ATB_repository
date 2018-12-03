@@ -174,7 +174,7 @@ def update_dataset(
 
     dataset = api.action.package_update(**updated_data)
     package_dict = dict(package = dataset)
-    api.action.package_create_default_resource_views(dict(package = dataset))
+    api.action.package_create_default_resource_views(**package_dict)
 
     return updated_data
 
