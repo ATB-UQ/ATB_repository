@@ -34,7 +34,7 @@
     </section>
   {% endif %}
 
-  {% for extra in pkg.get('extras') - %}
+  {% for extra in pkg.get('extras')%}
     <section id="dataset-"{{ extra.get('key')}} class="resources module-content">
     <p><strong>{{extra.get('key')}}</strong>: {{ extra.get('value') }}</p>
     </section>
