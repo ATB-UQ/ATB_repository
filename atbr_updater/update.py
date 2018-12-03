@@ -121,8 +121,10 @@ def update_dataset(
                     except TypeError:
                         value = float(value)
                         value = where_in('Temperature', value, (200, 400, 10))
+                        value = value + ' K'
                 elif tag is 'runtime':
                     value = at_least('Run time', value, [0.01, 0.1, 1, 10, 100, 1000])
+                    value = value + ' ns'
                 elif tag is 'num_atoms':
                     value = at_least('NumAtoms', value, [10, 100, 1000, 10000])
                 elif tag is 'box_side':
