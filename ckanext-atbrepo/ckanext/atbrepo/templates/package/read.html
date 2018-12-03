@@ -40,7 +40,7 @@
     {% do pkg_extras.update({extra.get('key'): extra.get('value')}) %}
   {% endfor %}
 
-  {% for key, value in pkg_extras.items() if key is not in ['num_atoms', 'simulation_time'] %}
+  {% for key, value in pkg_extras.items() if in(key, ['num_atoms', 'simulation_time']) %}
     <section id="dataset-"{{ key }} class="resources module-content">
     <p><strong>{{key.title()}}</strong>: {{ value }}</p>
     </section>
