@@ -34,10 +34,17 @@
     </section>
   {% endif %}
 
-  {% for extra in pkg.get('extras') %}
+  {% for extra in pkg.get('extras') - %}
     <section id="dataset-"{{ extra.get('key')}} class="resources module-content">
-    <p><strong>{{ extra.get('key').title() }}</strong>: {{ extra.get('value') }}</p>
-    </section>
+    {% if extra.get('key') is 'num_atoms' %}
+      <p><strong>Number of Atoms</strong>: {{ extra.get('value') }}</p>
+    {% elif extra.get('key') is 'simulation_time' %}
+      <p><strong>Simulation Time</strong>(ns): {{ extra.get('value') }}</p>
+      </section>
+    {% else %}
+      <p><strong>{{extra.get('key')}}</strong>: {{ extra.get('value') }}</p>
+      </section>
+    {% endif %}
   {% endfor %}
 
 {% endblock %}
