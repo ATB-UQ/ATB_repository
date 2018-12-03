@@ -34,7 +34,7 @@
     </section>
   {% endif %}
 
-  {% for extra in pkg.get('extras') if key != 'num_atoms' %}
+  {% for extra in pkg.get('extras') if extra.get('key') != 'num_atoms' %}
     <section id="dataset-"{{ extra.get('key')}} class="resources module-content">
     <p><strong>{{extra.get('key')}}</strong>: {{ extra.get('value') }}</p>
     </section>
