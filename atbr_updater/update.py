@@ -88,9 +88,9 @@ def at_least(name, value, checkpoints):
     """Returns a string stating the largest checkpoint value is greater than. DO NOT USE FOR NEGATIVE NUMBERS"""
     checkpoints.insert(0, 0)
     for checkpoint in checkpoints:
-        if checkpoint <= value:
+        if checkpoint < value:
             maximum = checkpoint
-    tag = "Min" + name + " is {}".format(maximum)
+    tag = name + " at least {}".format(maximum)
     return tag
 
 def update_dataset(
@@ -126,9 +126,9 @@ def update_dataset(
                     value = at_least('Run time', value, [0.01, 0.1, 1, 10, 100, 1000])
                     value = value + ' ns'
                 elif tag is 'num_atoms':
-                    value = at_least('NumAtoms', value, [10, 100, 1000, 10000])
+                    value = at_least('No. atoms', value, [10, 100, 1000, 10000])
                 elif tag is 'box_side':
-                    value = at_least('BoxSize', value, [0.1, 1, 10, 100, 1000, 10000])
+                    value = at_least('Box size', value, [0.1, 1, 10, 100, 1000, 10000])
                 else:
                     value = tag + ' is ' + value
                 tags.append(dict(name=value))
