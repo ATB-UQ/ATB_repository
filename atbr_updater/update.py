@@ -206,6 +206,8 @@ def update_resources(
     existing_resource_names = [ res["name"] for res in existing_resources ]
     resources_data = []
     for resource in resources:
+        if resource.startswith("."): #ignore hidden files
+            break
         abs_resource_path = path.join(abs_resources_dir, resource)
         new_data = dict(
             package_id = dataset.lower(),
