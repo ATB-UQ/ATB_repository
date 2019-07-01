@@ -1,7 +1,7 @@
 
 API_key: "5723cefe-5002-479f-89f7-8a2a878567b2"
-host: scmb-ckan.its.hpc.net.uq.edu.au
+host: molecular-dynamics.atb.uq.edu.au
 organization: "mduq"
-trajectory_data_path: /home/s4536542/PycharmProjects/ATB_repo/trajectory_data #../trajectory_data
-public_data_path: /home/s4536542/PycharmProjects/ATB_repo/public_data #../public_data
-public_hostname: scmb-ckan.its.hpc.net.uq.edu.au
+trajectory_data_path: /home/atb/atb_repo/trajectory_data #../trajectory_data
+public_data_path: /home/atb/atb_repo/public_data #../public_data
+public_hostname: molecular-dynamics.atb.uq.edu.au
