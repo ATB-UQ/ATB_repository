@@ -1,5 +1,6 @@
 Here will be a description of how the files are organised
 
+```
 └── System_Name
     ├── atbrepo.yml
     ├── control
@@ -10,5 +11,6 @@ Here will be a description of how the files are organised
     ├── log
     ├── topology
     └── trajectory
-    
+   ```
+   
 TODO: add naming, add atbrepo.yml desciption
