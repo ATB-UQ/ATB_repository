@@ -16,7 +16,7 @@
 
 -------------------------------------------------------
 # atbrepo.yml
-\\ atbrepo.yml is a file containing metadata for the system.
+atbrepo.yml is a file containing metadata for the system.
 
 The information includes:
 - **title:** This will appear as the title of the simulation on the website.
@@ -34,7 +34,7 @@ The information includes:
 Here are some example metadata files:
 
 Lipid bilayer in Gromacs: 
-    /home/atb/atb_repo/trajectory_data/tlee/TL_bilayer/TL_bilayer_D6PC_H2O_512_303K/atbrepo.yml
+    `/home/atb/atb_repo/trajectory_data/tlee/TL_bilayer/TL_bilayer_D6PC_H2O_512_303K/atbrepo.yml`
 ```
 notes: A lipid bilayer consisting of 512 D6PC molecules. Initiated from a smaller
   128-lipid DLPC equilibrated bilayer with trimmed tails. Pore spontaneously form
@@ -50,7 +50,7 @@ title: D6PC lipid bilayer
 ```
 
 Protein in Amber: 
-    /home/atb/atb_repo/trajectory_data/GROMOS_54A7_AMBER_Validation/1aki_54a7_amber_rep_1/atbrepo.yml
+    `/home/atb/atb_repo/trajectory_data/GROMOS_54A7_AMBER_Validation/1aki_54a7_amber_rep_1/atbrepo.yml`
 
 ```
 notes: 'Hen egg-white lysozyme protein with GROMOS 54A7 in AMBER (replicate 1 of 3).
@@ -70,7 +70,7 @@ title: Hen egg-white lysozyme
 ```
 
 Peptide in Gromos: 
-    /home/atb/atb_repo/trajectory_data/GROMOS_54A7_Validation/ap_54a7_rep_1/atbrepo.yml
+    `/home/atb/atb_repo/trajectory_data/GROMOS_54A7_Validation/ap_54a7_rep_1/atbrepo.yml`
 
 ```
 notes: Alpha-helical peptide AP with GROMOS 54A7 in GROMOS (replicate 1 of 3).
@@ -88,15 +88,16 @@ title: Alpha-helical peptide AP
 
 -------------------------------------------------------
 # Naming
-\\Each directory contains inputs, outputs, and other important files from the simulation. The above is an example, but not all of these folder/outputs are enforced. Within each folder, the files are named as follows:
-    > simulation_name_file-category_Run#.extension
+Each directory contains inputs, outputs, and other important files from the simulation. The above is an example, but not all of these folder/outputs are enforced. Within each folder, the files are named as follows:
+    `simulation_name_file-category_Run#.extension`
 
-\\Using the above example for a control file in GROMACS: 
-    > System_Name_control_00001.mdp
+Using the above example for a control file in GROMACS: 
+    `System_Name_control_00001.mdp`
 
 -------------------------------------------------------
 # FAQs
-\\ *Which directories/ files are enforced?* control, log, topology
-\\ *Which directories have an enforces naming style?* control, coordinates, energy, final-coordinates, input-coordinates, log, trajectory
+*Which directories/ files are enforced?* control, log, topology
+
+*Which directories have an enforces naming style?* control, coordinates, energy, final-coordinates, input-coordinates, log, trajectory
 
 
