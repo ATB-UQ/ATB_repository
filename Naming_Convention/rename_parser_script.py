@@ -16,7 +16,7 @@ def rename_folder(searcher):
 
     INPUT
     -----
-    searcher >>> string >>> accepted: [number, pad, time]
+    searcher >>> string >>> accepted: [number, pad, time, single]
 
     OUTPUT
     -----
