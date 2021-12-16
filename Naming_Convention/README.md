@@ -22,6 +22,7 @@ The information includes:
 - **title:** This will appear as the title of the simulation on the website.
 - **notes:** This will appear as a description of the simulation on the website.
 - **program:** A list of MD programs. Of course we would expect only one, but because of the way we implemented a special program tag in CKAN, it makes it easier to include this in atbrepo.yml as a list.
+- **organization:** The organisation the system is affiliated with as per the organisation URL
 - **tags:** Freeform text tags for the simulation. Note that some tags are prefixed with ‘item-’, namely:
     - *replicate*-[number] of [total number]
     - *protein*-[name of protein]
@@ -46,6 +47,7 @@ tags:
 - GROMOS
 - 54A7
 - solvent-H2O
+organization: mduq
 title: D6PC lipid bilayer
 ```
 
@@ -66,6 +68,7 @@ tags:
 - PDB-1AKI
 - protein-hen egg-white lysozyme
 - protein
+organization: mduq
 title: Hen egg-white lysozyme
 ```
 
@@ -83,6 +86,7 @@ tags:
 - replicate-1 of 3
 - peptide-alpha-helical peptide AP
 - peptide
+organization: mduq
 title: Alpha-helical peptide AP
 ```
 
