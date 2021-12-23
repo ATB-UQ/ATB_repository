@@ -5,7 +5,7 @@ import os
 parser = argparse.ArgumentParser(description='Script to rename files into standard for the ATB repository. Takes a folder containing one file extension and renames according to the argument specifications. This script should be run from the folder containing the files you would like to rename.', epilog='This script was created by Shelley Barfoot, the last edit was 2/12/21.')
 
 # -n option
-parser.add_argument('-n', '--naming', required=True, help='select the numbering system for your files. There are three accepted options: number = numbered sequentially i.e. 1, 2, 3 etc; pad = numbered with padding i.e. 00001, 00002, 00003; time = described with time frame i.e. 0-5ns, 5-10ns, 10-15ns etc; single = a run containing only a single file to rename', choices=['number', 'pad', 'time', 'single'])
+parser.add_argument('-n', '--naming', required=True, help='select the numbering system for your files. There are three accepted options: number = numbered sequentially i.e. 1, 2, 3 etc; pad = numbered with padding i.e. 00001, 00002, 00003; time = described with time frame i.e. 0-5ns, 5-10ns, 10-15ns etc; single = a run containing only a single file to rename; wall = a run containing two files, one named with "wall" (initial) and one named with "nowall".', choices=['number', 'pad', 'time', 'single', 'wall'])
 
 args = parser.parse_args()
 print("Naming =", args.naming)
@@ -16,7 +16,7 @@ def rename_folder(searcher):
 
     INPUT
     -----
-    searcher >>> string >>> accepted: [number, pad, time, single]
+    searcher >>> string >>> accepted: [number, pad, time, single, wall]
 
     OUTPUT
     -----
@@ -56,6 +56,11 @@ def rename_folder(searcher):
                 pattern = '_' + str(time) + '-'
             elif searcher=='single':
                 pattern = '.'
+            elif searcher=='wall':
+                if current_file == 1:
+                    pattern='_wall'
+                else:
+                    pattern='_nowall'
 
             if pattern in name:
                 #rename the file, print out for transparency
