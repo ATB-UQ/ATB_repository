@@ -106,12 +106,12 @@ Using the above example for a control file in GROMACS:
 # Upload
 To do this, you will need an account on `scmb-ckan.research.dc.uq.edu.au` with sudo permissions.
 
-To start, rsync your files to `scmb-ckan.research.dc.uq.edu.au:/Q0289/pending_atb_repo_data/YOUR_NAME`. You will need to make the folder with your name. It's important that your files have read permissions for everyone, so make sure to double check that once you have done the rsync.
+To start, rsync your files to `scmb-ckan.research.dc.uq.edu.au:/Q0289/pending_atb_repo_data/<YOUR_NAME>`. You will need to make the folder with your name. It's important that your files have read permissions for everyone, so make sure to double check that once you have done the rsync.
 
 Make a folder inside `/Q0289/atb_repo_data` with your name, this is important so we can track who uploaded what data.
 
-Move each system one at a time to your folder `/Q0289/atb_repo_data/YOUR_NAME`, and each time run the upload script on each new folder. It's important you do this one at a time incase there are upload problems. ONLY uploaded data should be inside the `atb_repo_data` folder. The upload script is located in `/home/atb/atb_repo/atbr_updater`. The current iteration of the script is called `update_https_orgs_comments.py`. To run the script, run the following command:
-    `sudo python3 update_https_orgs_comments.py -d /home/atb/atb_repo/trajectory_data/YOUR_NAME/single_system`
+Move each system one at a time to your folder `/Q0289/atb_repo_data/<YOUR_NAME>`, and each time run the upload script on each new folder. It's important you do this one at a time incase there are upload problems. ONLY uploaded data should be inside the `atb_repo_data` folder. The upload script is located in `/home/atb/atb_repo/atbr_updater`. The current iteration of the script is called `update_https_orgs_comments.py`. To run the script, run the following command:
+    `sudo python3 update_https_orgs_comments.py -d /home/atb/atb_repo/trajectory_data/<YOUR_NAME>/<your_system_name>`
 
 If there are problems, you will recieve errors when you run the script. If you have implimented your files correctly, you will recieve no errors and the system will be visable on the repository web server. It's worthwhile to double check you can access the files successfully on the web server before you continue to upload. If you need to update a system, you can rerun the above command on the same folder and the details will be updated in the repository.
 
