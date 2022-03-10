@@ -110,7 +110,7 @@ title: Alpha-helical peptide AP
 -------------------------------------------------------
 # Naming
 Within each subdirectory, the files are named as follows:
-    `simulation_name_file-category_Run#.extension`
+    `<simulation_name>_<file-category>_<run-number>.<file-extension>`
 
 Using the above example for a control file in GROMACS: 
     `System_Name_control_00001.mdp`
