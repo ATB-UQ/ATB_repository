@@ -5,8 +5,6 @@
 # 2. The script should not be left in the subdirectories after the renaming is completed, instead, they should be removed prior to 
 #    uploading to the ATB repository, this is because the upload script (e.g. update_https_orgs_comments.py mentioned in the "Upload"
 #    section of README) will not work if they are left in.
-# 3. This script does not always ensure the resulting directories will work with the upload script, certain manual modification may be 
-#    needed (for details, see "Notes" in "Upload" sections in README).
 
 import argparse
 import sys
