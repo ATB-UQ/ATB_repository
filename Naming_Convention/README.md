@@ -6,7 +6,7 @@
 # Structure
 
 ```
-└── **"System_Name"**
+└──# System_Name
 (Master directory containing subdirectories for different types of data, name can be a descriptor of the system simulated)
     ├── atbrepo.yml
     (file containing metadata for the system, see section **atbrepo.yml** below for details)
