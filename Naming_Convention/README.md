@@ -1,5 +1,5 @@
 # Overall steps to upload data to repository
-1. Ensure that the structure of the directories containing the data as well as the naming of the directories and files comply with that specified in **"Structure"** and **"Naming"** sections below. This can be either done manually or/and with the help of **rename_parser_script.py** provided.
+1. For data to be uploaded, ensure that the structure of the directories containing the data as well as the naming of the directories and files comply with that specified in **"Structure"** and **"Naming"** sections below. This can be either done manually or/and with the help of **rename_parser_script.py** provided.
 2. Follow steps detailed in **"Upload"** section below to move data to the CKAN server and upload to the ATB repository
 
 # Structure
