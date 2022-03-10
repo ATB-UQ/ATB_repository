@@ -5,6 +5,7 @@
 # 2. The script should not be left in the subdirectories after the renaming is completed, instead, they should be removed prior to 
 #    uploading to the ATB repository, this is because the upload script (e.g. update_https_orgs_comments.py mentioned in the "Upload"
 #    section of README) will not work if they are left in.
+# 3. In function rename_folder, the way 
 
 import argparse
 import sys
@@ -42,6 +43,8 @@ def rename_folder(searcher):
     #loop through the files in the directory and make an array
     file_list = []
     for my_file in os.listdir(my_folder):
+        if my_file.endswith(".py"):   #ignore files that ends with .py, without this, the script would not work if the .py is found first by os.listdir(my_folder)
+            continue
         if extension == 0:
             extension = my_file.split(".")[-1]
         if my_file.endswith(extension):
