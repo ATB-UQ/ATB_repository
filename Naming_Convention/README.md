@@ -1,21 +1,22 @@
 # Overall steps to upload data to repository
 1. For data to be uploaded, ensure that the structure of the directories containing the data as well as the naming of the directories and files comply with that specified in **"Structure"** and **"Naming"** sections below. This can be either done manually or/and with the help of **rename_parser_script.py** provided.
 2. Follow steps detailed in **"Upload"** section below to move data to the CKAN server and upload to the ATB repository
+**? should i say that only production simulatons trajectories should be uploaded?)
 
 # Structure
 
 ```
-└── System_Name
-    ├── atbrepo.yml
-    ├── control
-    ├── energy
-    ├── final-coordinates
-    ├── input-coordinates
-    ├── itp-files
-    ├── log
-    ├── reference-coordinates
-    ├── topology
-    └── trajectory
+└── System_Name (Master directory containing subdirectories for different types of data, name can be a descriptor of the system simulated)
+    ├── atbrepo.yml (file containing metadata for the system, see section **atbrepo.yml** below for details)
+    ├── control (Production simulation control file, e.g. .mdp file for GROMACS; .imd file for GROMOS, .mdin for AMBER)
+    ├── energy (Energy trajectory files)
+    ├── final-coordinates (Output coordinate files from the simulations)
+    ├── input-coordinates (Input coordinate files for the simulations)
+    ├── itp-files (**?forcefield files? only called this in GROMACS, but is this enforced, if not, .top doesnt tell you much...**)
+    ├── log (Simulation log files)
+    ├── reference-coordinates (**?Coordinate files relevant to the simulation that is not the the input or output coordinates for the production simulations**)
+    ├── topology (Topology files of the simulated system)
+    └── trajectory (Coordinate trajectory files for the simulation)
    ```
 
 -------------------------------------------------------
@@ -120,5 +121,9 @@ If there are problems, you will recieve errors when you run the script. If you h
 *Which directories/ files are enforced?* control, log, topology
 
 *Which directories have an enforces naming style?* control, coordinates, energy, final-coordinates, input-coordinates, log, trajectory
+
+*What information in atbrepo.yml is enforced?*
+
+**
 
 
