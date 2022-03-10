@@ -1,29 +1,30 @@
 # Overall steps to upload data to repository
 1. For data to be uploaded, ensure that the structure of the directories containing the data as well as the naming of the directories and files comply with that specified in **"Structure"** and **"Naming"** sections below. This can be either done manually or/and with the help of **rename_parser_script.py** provided.
 2. Follow steps detailed in **"Upload"** section below to move data to the CKAN server and upload to the ATB repository
-**? should i say that only production simulatons trajectories should be uploaded?)
+
 
 # Structure
+Each directory contains inputs, outputs, and other important files from the simulation. The below is an example, but not all of these folder/outputs are enforced (see FAQ) 
 
 ```
-└──# System_Name
+└──System_Name
 (Master directory containing subdirectories for different types of data, name can be a descriptor of the system simulated)
     ├── atbrepo.yml
     (file containing metadata for the system, see section **atbrepo.yml** below for details)
     ├── control
-    (Production simulation control file, e.g. .mdp file for GROMACS; .imd file for GROMOS, .mdin for AMBER)
+    (Simulation control file, e.g. .mdp file for GROMACS; .imd file for GROMOS, .mdin for AMBER)
     ├── energy
     (Energy trajectory files)
     ├── final-coordinates
     (Output coordinate files from the simulations)
     ├── input-coordinates
     (Input coordinate files for the simulations)
-    ├── itp-files
-    (**?forcefield files? only called this in GROMACS, but is this enforced, if not, .top doesnt tell you much...**)
+    ├── forcefield-files
+    (Forcefield files, e.g. .ifp file for GROMACS; .itp files for GROMOS)
     ├── log
     (Simulation log files)
     ├── reference-coordinates
-    (**?Coordinate files relevant to the simulation that is not the the input or output coordinates for the production simulations**)
+    (Coordinate files relevant to the simulation that is not the the input or output coordinates for the simulations)
     ├── topology
     (Topology files of the simulated system)
     └── trajectory
@@ -108,7 +109,7 @@ title: Alpha-helical peptide AP
 
 -------------------------------------------------------
 # Naming
-Each directory contains inputs, outputs, and other important files from the simulation. The above is an example, but not all of these folder/outputs are enforced. Within each folder, the files are named as follows:
+Within each subdirectory, the files are named as follows:
     `simulation_name_file-category_Run#.extension`
 
 Using the above example for a control file in GROMACS: 
@@ -135,6 +136,5 @@ If there are problems, you will recieve errors when you run the script. If you h
 
 *What information in atbrepo.yml is enforced?*
 
-**
 
 
