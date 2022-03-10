@@ -6,17 +6,28 @@
 # Structure
 
 ```
-└── System_Name (Master directory containing subdirectories for different types of data, name can be a descriptor of the system simulated)
-    ├── atbrepo.yml (file containing metadata for the system, see section **atbrepo.yml** below for details)
-    ├── control (Production simulation control file, e.g. .mdp file for GROMACS; .imd file for GROMOS, .mdin for AMBER)
-    ├── energy (Energy trajectory files)
-    ├── final-coordinates (Output coordinate files from the simulations)
-    ├── input-coordinates (Input coordinate files for the simulations)
-    ├── itp-files (**?forcefield files? only called this in GROMACS, but is this enforced, if not, .top doesnt tell you much...**)
-    ├── log (Simulation log files)
-    ├── reference-coordinates (**?Coordinate files relevant to the simulation that is not the the input or output coordinates for the production simulations**)
-    ├── topology (Topology files of the simulated system)
-    └── trajectory (Coordinate trajectory files for the simulation)
+└── System_Name 
+(Master directory containing subdirectories for different types of data, name can be a descriptor of the system simulated)
+    ├── atbrepo.yml
+    (file containing metadata for the system, see section **atbrepo.yml** below for details)
+    ├── control
+    (Production simulation control file, e.g. .mdp file for GROMACS; .imd file for GROMOS, .mdin for AMBER)
+    ├── energy
+    (Energy trajectory files)
+    ├── final-coordinates
+    (Output coordinate files from the simulations)
+    ├── input-coordinates
+    (Input coordinate files for the simulations)
+    ├── itp-files
+    (**?forcefield files? only called this in GROMACS, but is this enforced, if not, .top doesnt tell you much...**)
+    ├── log
+    (Simulation log files)
+    ├── reference-coordinates
+    (**?Coordinate files relevant to the simulation that is not the the input or output coordinates for the production simulations**)
+    ├── topology
+    (Topology files of the simulated system)
+    └── trajectory
+    (Coordinate trajectory files for the simulation)
    ```
 
 -------------------------------------------------------
