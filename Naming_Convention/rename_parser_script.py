@@ -88,6 +88,10 @@ def rename_folder(searcher):
 
                 current_file += 1
                 break
+            elif pattern not in name:
+                print ("Error, pattern not in file name")
+                return None
+                
 
 if __name__ == "__main__":
     rename_folder(args.naming)
