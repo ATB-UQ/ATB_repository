@@ -5,7 +5,8 @@
 # 2. The script should not be left in the subdirectories after the renaming is completed, instead, they should be removed prior to 
 #    uploading to the ATB repository, this is because the upload script (e.g. update_https_orgs_comments.py mentioned in the "Upload"
 #    section of README) will not work if they are left in.
-# 3. In function rename_folder, the way 
+# 3. In function rename_folder, the way the script looks for pattern for sequential naming means that it will not work for files that does not
+#    have any of the patterns in them 
 
 import argparse
 import sys
