@@ -1,0 +1,8 @@
+1. when running the update script, if the data path in the end of the command has a '/' it does not work. Will throw
+ckanapi.errors.ValidationError: {'name': ['Missing value'], '__type': 'Validation Error'}
+e.g.
+this does not work
+ sudo python3 update_https_orgs_comments.py -d /home/atb/atb_repo/trajectory_data/uqzzhou/POPC_bilayer_with_pore_4peptides_r1/
+this does work
+ sudo python3 update_https_orgs_comments.py -d /home/atb/atb_repo/trajectory_data/uqzzhou/POPC_bilayer_with_pore_4peptides_r1
+might need to fix this by excluding the / when parsing system name
