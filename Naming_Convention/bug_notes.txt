@@ -6,3 +6,5 @@ this does not work
 this does work
  sudo python3 update_https_orgs_comments.py -d /home/atb/atb_repo/trajectory_data/uqzzhou/POPC_bilayer_with_pore_4peptides_r1
 might need to fix this by excluding the / when parsing system name
+
+2. in the rename script, in the line "for my_file in os.listdir(my_folder):", this should be changed to for my_file in sorted(os.listdir(my_folder)):, because the later sections of the script that checks for existing patterns in the file name will proceed with the order outputted by os.listdir, and i ran into a bug when os.listdir did not list the file name containing "0-100ns" first, and later in the script it was looking for the patter "_0-" in the first file listed expecting that the 0-100ns will be listed first, after adding "sorted" it worked
