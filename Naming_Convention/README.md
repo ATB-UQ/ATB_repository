@@ -119,19 +119,19 @@ Using the above example for a control file in GROMACS:
 # Upload
 The steps to upload are listed below, helpful notes and details for each step are listed in dot points
 
-1. Obtain an account on the ckan server (scmb-ckan.research.dc.uq.edu.au) with sudo permissions
+##1. Obtain an account on the ckan server (scmb-ckan.research.dc.uq.edu.au) with sudo permissions
 * This needs to be done by admins of the atb repository, please get in contact with them
 * The admin will set up an account for you once you provide your username to them, and they will give you your temporary password which you can use to login to the ckan server
 * The temporary password can be changed to your own password by using the command "passwd" once you have logged in to the ckan server
-2. Make your own sub-directory (named with your username) on the ckan server under the master directory "/Q0289/pending_atb_repo_data/" 
+##2. Make your own sub-directory (named with your username) on the ckan server under the master directory "/Q0289/pending_atb_repo_data/" 
 * For example, if your username is "uqadamjensen" your own subdirectory should be "/Q0289/pending_atb_repo_data/uqadamjensen/"
 * It's important that your files have read permissions for everyone, you could do this by using "sudo chmod +777" command on the sub-directory, which will give everyone read and write permissions, this will also allow the rsync to work in step 4
-3. Make another sub-directory under your name on the ckan server, this time under the master directory "/Q0289/atb_repo_data/"
-4. Rsync your system (with compliant directory structure and naming conventions specified in "Structure" and "Naming" sections) you wish to upload to your own sub-directory made in step 2
+##3. Make another sub-directory under your name on the ckan server, this time under the master directory "/Q0289/atb_repo_data/"
+##4. Rsync your system (with compliant directory structure and naming conventions specified in "Structure" and "Naming" sections) you wish to upload to your own sub-directory made in step 2
 * for example, if your directory made in step 2 is "/Q0289/pending_atb_repo_data/uqadamjensen/" , and your system you wish to upload is named "augprotein1", after the rsync, your data should now be in "/Q0289/pending_atb_repo_data/uqadamjensen/augprotein1/"
-5. Move your system, now located in your own sub-directory under "/Q0289/pending_atb_repo_data/", to your directiory made in step 4, that is, your sub-directory in "/Q0289/atb_repo_data/", this is where the data will be uploaded from in the later steps
+##5. Move your system, now located in your own sub-directory under "/Q0289/pending_atb_repo_data/", to your directiory made in step 4, that is, your sub-directory in "/Q0289/atb_repo_data/", this is where the data will be uploaded from in the later steps
 * Analogous to step 4, after moving the system here, your system should now be in "/Q0289/atb_repo_data/uqadamjensen/augprotein1/"
-6. Navigate to the directory "/home/atb/atb_repo/atbr_updater/" and run the upload script from here to upload your data, now located in your directory in "/Q0289/atb_repo_data/"
+##6. Navigate to the directory "/home/atb/atb_repo/atbr_updater/" and run the upload script from here to upload your data, now located in your directory in "/Q0289/atb_repo_data/"
 * The upload script you need to use is "update_https_orgs_comments.py"
 * The upload script can be ran using the command "sudo python3 update_https_orgs_comments.py -d /home/atb/atb_repo/trajectory_data/<YOUR_USER_NAME>/<your_system_name>" , note that the "/<YOUR_USER_NAME>/<your_system_name>" part should be consistent with with the "/uqadamjensen/augprotein1" part of the example in step 2 and 4.
 * If there are problems, you will recieve errors when you run the script. If you have implimented your files correctly, you will recieve no errors and the system will be visable on the repository web server. It's worthwhile to double check you can access the files successfully on the web server before you continue to upload. If you need to update a system, you can rerun the above command on the same folder and the details will be updated in the repository.
