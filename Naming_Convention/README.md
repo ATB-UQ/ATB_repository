@@ -119,7 +119,7 @@ Using the above example for a control file in GROMACS:
 # Upload
 The steps to upload are listed below, helpful notes and details for each step are listed in dot points
 
-## 1. Obtain an account on the ckan server (scmb-ckan.research.dc.uq.edu.au) with sudo permissions
+## 1. Obtain an account on the ckan server (molecular-dynamics.atb.uq.edu.au) with sudo permissions
 * This needs to be done by admins of the atb repository, please get in contact with them
 * The admin will set up an account for you once you provide your username to them, and they will give you your temporary password which you can use to login to the ckan server
 * The temporary password can be changed to your own password by using the command "passwd" once you have logged in to the ckan server
