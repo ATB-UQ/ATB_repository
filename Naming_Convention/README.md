@@ -72,9 +72,9 @@ Protein in Amber:
     `/home/atb/atb_repo/trajectory_data/GROMOS_54A7_AMBER_Validation/1aki_54a7_amber_rep_1/atbrepo.yml`
 
 ```
-notes: 'Hen egg-white lysozyme protein with GROMOS 54A7 in AMBER (replicate 1 of 3).
+notes: ''Hen egg-white lysozyme protein with GROMOS 54A7 in AMBER (replicate 1 of 3).
   Initial structure obtained from the Protein Data Bank (PDB). PDB ID: 1AKI, URL:
-  <a href="https://www.rcsb.org/structure/1AKI">https://www.rcsb.org/structure/1AKI</a>'
+  <a href="https://www.rcsb.org/structure/1AKI">https://www.rcsb.org/structure/1AKI</a>''
 program:
 - AMBER
 tags:
@@ -86,7 +86,7 @@ tags:
 - protein-hen egg-white lysozyme
 - protein
 organization: mduq
-title: Hen egg-white lysozyme
+title: 'Hen egg-white lysozyme'
 ```
 
 Peptide in Gromos: 
