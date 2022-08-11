@@ -33,11 +33,11 @@ Each directory contains inputs, outputs, and other important files from the simu
 
 -------------------------------------------------------
 # atbrepo.yml
-atbrepo.yml is a file containing metadata for the system.
+atbrepo.yml is a file containing metadata for the system. 
 
 The information includes:
-- **title:** This will appear as the title of the simulation on the website.
-- **notes:** This will appear as a description of the simulation on the website.
+- **title:** This will appear as the title of the simulation on the website. Should be enclosed in single quotation marks, see examples below.
+- **notes:** This will appear as a description of the simulation on the website. If the data is related to a publication, you can also put the DOI of your publication here. Should be enclosed in single quotation marks, see examples below.
 - **program:** A list of MD programs. Of course we would expect only one, but because of the way we implemented a special program tag in CKAN, it makes it easier to include this in atbrepo.yml as a list.
 - **organization:** The organisation the system is affiliated with as per the organisation URL, the current availible organization names are **bernhardt, chalmers, deplazes, krenske, malde, mduq, omara, smith, yu**, you should choose whichever is the most appropriate 
 - **tags:** Freeform text tags for the simulation. Note that some tags are prefixed with ‘item-’, namely:
@@ -54,9 +54,9 @@ Here are some example metadata files:
 Lipid bilayer in Gromacs: 
     `/home/atb/atb_repo/trajectory_data/tlee/TL_bilayer/TL_bilayer_D6PC_H2O_512_303K/atbrepo.yml`
 ```
-notes: A lipid bilayer consisting of 512 D6PC molecules. Initiated from a smaller
+notes: 'A lipid bilayer consisting of 512 D6PC molecules. Initiated from a smaller
   128-lipid DLPC equilibrated bilayer with trimmed tails. Pore spontaneously form
-  during the simulation.
+  during the simulation.'
 program: GROMACS
 tags:
 - lipid-D6PC
@@ -65,16 +65,16 @@ tags:
 - 54A7
 - solvent-H2O
 organization: mduq
-title: D6PC lipid bilayer
+title: 'D6PC lipid bilayer'
 ```
 
 Protein in Amber: 
     `/home/atb/atb_repo/trajectory_data/GROMOS_54A7_AMBER_Validation/1aki_54a7_amber_rep_1/atbrepo.yml`
 
 ```
-notes: ''Hen egg-white lysozyme protein with GROMOS 54A7 in AMBER (replicate 1 of 3).
+notes: 'Hen egg-white lysozyme protein with GROMOS 54A7 in AMBER (replicate 1 of 3).
   Initial structure obtained from the Protein Data Bank (PDB). PDB ID: 1AKI, URL:
-  <a href="https://www.rcsb.org/structure/1AKI">https://www.rcsb.org/structure/1AKI</a>''
+  <a href="https://www.rcsb.org/structure/1AKI">https://www.rcsb.org/structure/1AKI</a>'
 program:
 - AMBER
 tags:
@@ -93,7 +93,7 @@ Peptide in Gromos:
     `/home/atb/atb_repo/trajectory_data/GROMOS_54A7_Validation/ap_54a7_rep_1/atbrepo.yml`
 
 ```
-notes: Alpha-helical peptide AP with GROMOS 54A7 in GROMOS (replicate 1 of 3).
+notes: 'Alpha-helical peptide AP with GROMOS 54A7 in GROMOS (replicate 1 of 3).'
 program:
 - GROMOS
 tags:
@@ -104,7 +104,7 @@ tags:
 - peptide-alpha-helical peptide AP
 - peptide
 organization: mduq
-title: Alpha-helical peptide AP
+title: 'Alpha-helical peptide AP'
 ```
 
 -------------------------------------------------------
