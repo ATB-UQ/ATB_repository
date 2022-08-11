@@ -4,7 +4,7 @@
 
 
 # Structure
-Each directory contains inputs, outputs, and other important files from the simulation. The below is an example, but not all of these folder/outputs are enforced (see FAQ) 
+Each directory contains inputs, outputs, and other important files from the simulation. The below is an example, but not all of these folder/outputs are enforced (see FAQ), **Note** Please make sure you do not have files (**hidden or otherwise**) other than the types specified below (Both under the System_Name master directory and under each subdirectory), please use ls -a from terminal to check if there is any hidden files and remove them before attempting to upload.
 
 ```
 └──System_Name
