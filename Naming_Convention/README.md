@@ -75,8 +75,7 @@ Protein in Amber:
 notes: 'Hen egg-white lysozyme protein with GROMOS 54A7 in AMBER (replicate 1 of 3).
   Initial structure obtained from the Protein Data Bank (PDB). PDB ID: 1AKI, URL:
   <a href="https://www.rcsb.org/structure/1AKI">https://www.rcsb.org/structure/1AKI</a>'
-program:
-- AMBER
+program: AMBER
 tags:
 - GROMOS
 - 54A7
@@ -94,8 +93,7 @@ Peptide in Gromos:
 
 ```
 notes: 'Alpha-helical peptide AP with GROMOS 54A7 in GROMOS (replicate 1 of 3).'
-program:
-- GROMOS
+program: GROMOS
 tags:
 - GROMOS
 - 54A7
